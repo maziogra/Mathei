@@ -1,26 +1,29 @@
 import sympy as sp;
+from trovaPeriodo import trovaPeriodo;
 
 def segno(f, x):
     
     # trovo zeri e dominio da cui estrarro i punti critici
     punti = sp.solveset(f, x, domain=sp.S.Reals);
     dominio = sp.calculus.util.continuous_domain(f, x, sp.S.Reals);
+    gonio = False;
     
     # se i punti sono finiti vuoldire che non è una goniometrica
     # da rivedere, forse ci sono altri casi
     if isinstance(punti, sp.FiniteSet):
         punti = list(punti);
     else:
-        # funzione per trovare il periodo, ancora da implementare
-        # BISOGNA VALUTARE SINGOLARMENTE I PARAMETRI DELLE FUNZIONE GONIO e IL LORO COEFFICIENTE
-        # IN CASO NON SI RIESCA BISOGNA FARE IL mcm DEI PERIODI
-        per = trovaPeriodo()
+        # funzione per trovare il periodo
+        per = trovaPeriodo(f,x)
+        gonio = True;
         if per is not None:
             # periodo trovato
             punti = list(sp.solveset(f, x, domain=sp.Interval(0, per)))
+            dominio = sp.calculus.util.continuous_domain(f, x, sp.Interval(0, per));
         else:
             # limitazione disperata del periodo (anche se non c'è)
             punti = list(sp.solveset(f, x, domain=sp.Interval(-10, 10)));
+            dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-10, 10));
     
     # metto nell'insieme dei punti anche i punti in cui la funz non esiste
     if isinstance(dominio, sp.Union):
@@ -74,8 +77,17 @@ def segno(f, x):
         except:
             segni.append("non definito");
             
+    # se è goniometrica tolgo gli intervalli agli estremi, altrimenti mi direbbe una cosa sbagliata
+    # direbbe che all'infinito la funzione ha sempre lo stesso segno, ma non è vero dato che stiamo considerando
+    # solo un intervallo limitato 
+    if gonio:
+        intervalli.pop(0);
+        intervalli.pop();
+        segni.pop(0);
+        segni.pop();
+        
     # Stampa dei risultati provvisoria, poi da rimuovere, tanto serve solo per debug
     for i in range(len(segni)):
-        print(f"Intervallo {intervalli[i]} → {intervalli[i+1]}: segno {segni[i]}")
+        print(f"Intervallo {intervalli[i]} -> {intervalli[i+1]}: segno {segni[i]}")
 
     return punti, segni;
