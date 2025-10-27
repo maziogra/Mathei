@@ -1,48 +1,8 @@
 import sympy as sp;
-from trovaPeriodo import trovaPeriodo;
+from trovaPuntiCritici import trovaPuntiCritici;
 
 def segno(f, x):
-    
-    # trovo zeri e dominio da cui estrarro i punti critici
-    punti = sp.solveset(f, x, domain=sp.S.Reals);
-    dominio = sp.calculus.util.continuous_domain(f, x, sp.S.Reals);
-    gonio = False;
-    
-    # se i punti sono finiti vuoldire che non è una goniometrica
-    # da rivedere, forse ci sono altri casi
-    if isinstance(punti, sp.FiniteSet):
-        punti = list(punti);
-    else:
-        # funzione per trovare il periodo
-        per = trovaPeriodo(f,x)
-        gonio = True;
-        if per is not None:
-            # periodo trovato
-            punti = list(sp.solveset(f, x, domain=sp.Interval(0, per)))
-            dominio = sp.calculus.util.continuous_domain(f, x, sp.Interval(0, per));
-        else:
-            # limitazione disperata del periodo (anche se non c'è)
-            punti = list(sp.solveset(f, x, domain=sp.Interval(-10, 10)));
-            dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-10, 10));
-    
-    # metto nell'insieme dei punti anche i punti in cui la funz non esiste
-    if isinstance(dominio, sp.Union):
-        for intervallo in dominio.args:
-            for limite in [intervallo.start, intervallo.end]:
-                if limite in punti:
-                    continue;
-                if limite != sp.oo and limite != -sp.oo:
-                    punti.append(limite);
-    if isinstance(dominio, sp.Interval):
-        for limite in [dominio.start, dominio.end]:
-            if limite in punti:
-                    continue;
-            if limite != sp.oo and limite != -sp.oo:
-                punti.append(limite);
-                
-    # ritorno -1 se non ci sono punti in cui la funzione cambia segno
-    if(punti == []):
-        return -1;
+    punti, gonio = trovaPuntiCritici(f, x);
         
     punti = sorted(punti);
     
@@ -88,6 +48,6 @@ def segno(f, x):
         
     # Stampa dei risultati provvisoria, poi da rimuovere, tanto serve solo per debug
     for i in range(len(segni)):
-        print(f"Intervallo {intervalli[i]} -> {intervalli[i+1]}: segno {segni[i]}")
+        print(f"Intervallo {intervalli[i]} -> {intervalli[i+1]}: segno {segni[i]}");
 
     return punti, segni;
