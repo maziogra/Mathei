@@ -25,14 +25,14 @@ def trovaPuntiCritici(f, x):
                 punti = [];
                 # questo lo metto a false altrimenti nella funzione segno toglie il primo e l'ultimo intervallo che creo
                 # per poter effettuare i test, che in questo caso non riesce a generare in quanto non c'è nemmeno un punto intermedio a cui appoggiarsi
-                
                 gonio = False;
+                return punti, gonio, False;
         else:
             # limitazione disperata del periodo (anche se non c'è)
             punti = list(sp.solveset(f, x, domain=sp.Interval(-10, 10)));
             dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-10, 10));
     
-        # metto nell'insieme dei punti anche i punti in cui la funz non esiste
+    # metto nell'insieme dei punti anche i punti in cui la funz non esiste
     if isinstance(dominio, sp.Union):
         for intervallo in dominio.args:
             for limite in [intervallo.start, intervallo.end]:
@@ -47,6 +47,5 @@ def trovaPuntiCritici(f, x):
             if limite != sp.oo and limite != -sp.oo:
                 punti.append(limite);
     
-    
-    return punti, gonio;
+    return punti, gonio, True;
     

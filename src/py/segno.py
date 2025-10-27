@@ -2,12 +2,15 @@ import sympy as sp;
 from trovaPuntiCritici import trovaPuntiCritici;
 
 def segno(f, x):
-    punti, gonio = trovaPuntiCritici(f, x);
+    punti, gonio, controllo = trovaPuntiCritici(f, x);
         
     punti = sorted(punti);
-    
-    # aggiungo agli estremi gli infiniti per considerare tutti gli intervalli sensati
+
     intervalli = [-sp.oo] + punti + [sp.oo];
+    
+    if controllo == False:
+        print(f"Intervallo {intervalli[0]} -> {intervalli[1]}: segno non definito");
+        return intervalli, ["non definito"];
     
     segni = [];
 
