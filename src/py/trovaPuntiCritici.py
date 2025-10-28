@@ -9,7 +9,7 @@ def trovaPuntiCritici(f, x):
     
     # se i punti sono finiti vuoldire che non è una goniometrica
     # da rivedere, forse ci sono altri casi
-    if isinstance(punti, sp.FiniteSet):
+    if isinstance(punti, sp.FiniteSet) or punti == sp.EmptySet:
         punti = list(punti);
     else:
         # funzione per trovare il periodo
