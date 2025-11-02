@@ -1,6 +1,7 @@
 import sympy as sp;
-from segno import segno;
+from createSign import createSign;
 
-x = sp.symbols('x');
-f = sp.sin(x)/sp.log(x) + sp.exp(x);
-segno(f, x);
+x = sp.symbols('x')
+f = sp.cos(x +3)*sp.log(x) + sp.sin(x)
+signs = []
+createSign(f, x, signs)
