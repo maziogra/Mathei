@@ -1,43 +1,49 @@
 import sympy as sp;
-from addInfinite import addInfinite
-from findNearestPeriod import findNearestPeriod;
-from test import test
 from trovaPuntiCritici import trovaPuntiCritici
+from addInfinite import addInfinite
+from test import test
+from analizer import analizer
+from findSolution import findSoluntion
 
-def createSign(f, x, signs):
-    #Toglie i possibili None dalla lista dei segni
-    count = 0
-    for i in signs:
-        if i == None:
-            signs.pop(count)
-        count += 1  
-    if sp.srepr(f).startswith('Mul'):
-        for arg in f.args:
-            trig_functions = arg.find(lambda u: isinstance(u, (sp.sin, sp.cos, sp.tan)))
-            if trig_functions:
-                signs.append(findNearestPeriod(arg, x, signs))
-
-    # Analizza somme (Add)
-    elif sp.srepr(f).startswith('Add'):
-        for arg in f.args:
-            createSign(arg, x, signs)  # ricorsione per ogni termine della somma
-
-    # Analizza funzioni singole
-    else:
-        trig_functions = f.find(lambda u: isinstance(u, (sp.sin, sp.cos, sp.tan)))
-        if trig_functions:
-            signs.append(findNearestPeriod(f, x, signs))
-        else:
+def createSign(f, x):
+    signs = []
+    interlvals = []
+    functionDomain = sp.calculus.util.continuous_domain(f, x, sp.S.Reals)
+     
+    # prova a interpretarla come polinomio in x 
+    try:
+        p = sp.Poly(f, x)
+        grado = p.degree()
+        if grado == 1 or grado == 2:
             signs.append(trovaPuntiCritici(f, x))
+    except:
+        pass
+
+    signs += analizer(f, x)
 
     print("Final signs:")
     print(signs)
     
-    interlvals = []
     for element in signs:
         for interval in element[0]:
             interlvals.append(interval)
 
+    
+    print("Combined intervals:", interlvals)
+    interlvals = sorted(interlvals)
+    domain = sp.Intersection(sp.Interval(interlvals[0], interlvals[-1], left_open=False, right_open=False), functionDomain)
+    sol = sp.solveset(f, x, domain=domain)
+    
+    if sol != sp.EmptySet:
+        if isinstance(sol, sp.ConditionSet):
+            sol = findSoluntion(f, x)
+            interlvals += sorted(sol)
+        else:
+            sol = list(sol)
+            interlvals += sorted(sol)
+        print("solveset: ", sol)
+
+    interlvals = list(set(interlvals))
     interlvals = sorted(interlvals)
     print("Combined intervals:", interlvals)
     

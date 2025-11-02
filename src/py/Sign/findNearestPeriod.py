@@ -11,7 +11,6 @@ def findNearestPeriod(f, x, signs):
         periods.append(element[0])
 
     periods = sorted(periods)
-    print("Existing periods:", periods)
     max_period = -sp.oo
     min_period = sp.oo
     # Find the extremes of the existing periods
@@ -23,12 +22,9 @@ def findNearestPeriod(f, x, signs):
                 min_period = number
     
     # calculate the period of the goniometric function until the nearest extremes
-    print("Min period:", min_period)
-    print("Max period:", max_period)
     left = -1
     right = 1
     period = trovaPeriodo(f, x)
-    print("Function period:", period)
     leftExtreme = -float(period)
     rightExtreme = float(period)
     
@@ -51,7 +47,6 @@ def findNearestPeriod(f, x, signs):
         zeros = list(zeros)
     addDomainPoints(domain, zeros)
     zeros = sorted(zeros)
-    print("Found zeros:", zeros)
     signs2 = []
     signs2, zeros = test(zeros, signs2, f, x)
 
