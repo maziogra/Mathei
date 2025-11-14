@@ -18,5 +18,21 @@ def findSoluntion(f, x):
         except Exception:
             pass
 
+    solutions = list(solutions)
+    for i in range(len(solutions)):
+        val = solutions[i]
+        if val == 3.14159265359:
+            solutions[i] = sp.pi
+        elif val == 6.28318530718:
+            solutions[i] = 2 * sp.pi
+        elif val == -3.14159265359:
+            solutions[i] = -sp.pi
+        elif val == -6.28318530718:
+            solutions[i] = -2 * sp.pi
+        else:
+            if abs(val - round(val)) < 1e-6:
+                solutions[i] = int(round(val))
+            else:
+                solutions[i] = val
     solutions = sorted(solutions)
     return solutions
