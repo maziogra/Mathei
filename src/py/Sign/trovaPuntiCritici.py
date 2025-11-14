@@ -1,6 +1,6 @@
-import sympy as sp;
-from addDomainPoints import addDomainPoints
-from test import test
+import sympy as sp
+from Sign.addDomainPoints import addDomainPoints
+from Sign.test import test
 
 def trovaPuntiCritici(f, x):
     # trovo zeri e dominio da cui estrarro i punti critici

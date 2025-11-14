@@ -1,5 +1,4 @@
 import sympy as sp
-import test as test
 
 def test(intervalli, segni, f, x):
     for i in range(len(intervalli)-1):

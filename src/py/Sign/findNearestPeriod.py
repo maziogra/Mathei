@@ -1,7 +1,7 @@
 import sympy as sp
-from test import test
-from addDomainPoints import addDomainPoints
-from trovaPeriodo import trovaPeriodo;
+from Sign.test import test
+from Sign.addDomainPoints import addDomainPoints
+from Utils.trovaPeriodo import trovaPeriodo
 
 def findNearestPeriod(f, x, signs):
     periods = []

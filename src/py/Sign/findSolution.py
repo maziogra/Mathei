@@ -1,7 +1,4 @@
 import sympy as sp
-x = sp.symbols('x', real=True)
-f = sp.log(x)*sp.cos(x + 3) + sp.sin(x)
-
 
 def findSoluntion(f, x):
     a = float(0)

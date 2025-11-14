@@ -1,6 +1,6 @@
 import sympy as sp
-from findNearestPeriod import findNearestPeriod
-from trovaPuntiCritici import trovaPuntiCritici
+from Sign.findNearestPeriod import findNearestPeriod
+from Sign.trovaPuntiCritici import trovaPuntiCritici
 
 def analizer(expr, x):
     res = []

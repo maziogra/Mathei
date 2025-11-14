@@ -1,9 +1,9 @@
-import sympy as sp;
-from trovaPuntiCritici import trovaPuntiCritici
-from addInfinite import addInfinite
-from test import test
-from analizer import analizer
-from findSolution import findSoluntion
+import sympy as sp
+from Sign.trovaPuntiCritici import trovaPuntiCritici
+from Sign.addInfinite import addInfinite
+from Sign.test import test
+from Sign.analizer import analizer
+from Sign.findSolution import findSoluntion
 
 def createSign(f, x):
     signs = []
