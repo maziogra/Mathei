@@ -1,5 +1,7 @@
 import sympy as sp
 from Sign.createSign import createSign
+from Domain import dominio
+from Intercepts import intersezioni
 #from Limits.limiti import limiti
 #from Derivatives.explainDerivatives import explainDerivatives
 from Domain.dominio import dominio

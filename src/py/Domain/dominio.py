@@ -1,9 +1,8 @@
 import sympy as sp;
 
-#??? controllo esponent c.e.
+#controllo esponent c.e.
 def dominio(funzione):
    x=sp.symbols("x")
-   # parto con dom che è tutto R
    dominio=sp.S.Reals
    denominatore=sp.denom(sp.together(funzione))
    # ho una frazione tolgo gli zeri, poi c.e nel for per tutte
