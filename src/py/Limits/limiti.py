@@ -1,53 +1,41 @@
 import sympy as sp
 import math as math
 
+def visita(expr):
+    yield expr
+    for arg in expr.args:
+        yield from visita(arg)
+
 def limiti(f, x, x0):
-    f = sp.simplify(f)
+    risultato = sp.limit(f, x, x0)
+    for expr in visita(f):
+        if isinstance(expr, sp.Pow):
+            base, exp = expr.args
+            lb = sp.limit(base, x, x0)
+            le = sp.limit(exp, x, x0)
 
-    for pow_expr in f.find(sp.Pow):
-        check1 = False
-        check2 = False
+            if lb == 1 and abs(le) == sp.oo:
+                print("Forma indeterminata 1^∞ in", expr)
+            elif lb == 0 and le == 0:
+                print("Forma indeterminata 0^0 in", expr)
+            elif abs(lb) == sp.oo and le == 0:
+                print("Forma indeterminata ∞^0 in", expr)
+            continue
 
-        for arg in pow_expr.args:
-            res = sp.limit(arg, x, x0)
+        if expr.is_Rational is False and sp.denom(expr) != 1:
+            num, den = sp.fraction(expr)
+            ln = sp.limit(num, x, x0)
+            ld = sp.limit(den, x, x0)
 
-            if check1:
-                if abs(res) == sp.oo or res == 0:
-                    check2 = True
-                    break
+            if ln == 0 and ld == 0:
+                print("Forma indeterminata 0/0 in", expr)
+            elif abs(ln) == sp.oo and abs(ld) == sp.oo:
+                print("Forma indeterminata ∞/∞ in", expr)
+            continue
 
-            if res in [1, 0, sp.oo, -sp.oo]:
-                check1 = True
+        if isinstance(expr, sp.Mul):
+            lims = [sp.limit(a, x, x0) for a in expr.args]
+            if 0 in lims and any(abs(l) == sp.oo for l in lims):
+                print("Forma indeterminata 0·∞ in", expr)
 
-        if(check1 and check2):
-            print("Forma indeterminata 1^oo 0^0 oo^0")
-
-    if(sp.denom(f) != 1):
-        res0 = sp.limit(sp.denom(f), x, x0)
-        res1 = sp.limit(sp.numer(f), x, x0)
-        if(not (math.isfinite(res0) and math.isfinite(res1))):
-            print("Forma indeterminata oo/oo, raccogli per il grado massimo")
-        if(res0 == 0 and res1 == 0):
-            print("Forma indeterminata 0/0, scomponi")
-    
-    limite_fattori = [sp.limit(fattore, x, x0) for fattore in f.args]
-    
-    if(isinstance(f, sp.Mul)):
-        check0 = False
-        checkoo = False
-        for i in range(len(limite_fattori)):
-            if(limite_fattori[i] == 0):
-                check0 = True
-            if(abs(limite_fattori[i]) == sp.oo):
-                checkoo = True
-        if(check0 and checkoo):
-            print("Forma indeterminata oo·0, razionalizza")
-    elif(isinstance(f, sp.Sum)):
-        check1 = check2 = False
-        for i in range(len(limite_fattori)):
-            if(limite_fattori[i] == sp.oo):
-                check1 = True
-            if(limite_fattori[i] == -sp.oo):
-                check2 = True
-        if(check1 and check2):
-            print("Forma indeterminata + oo - oo, raccogli o razionalizza")
+    print(risultato)
