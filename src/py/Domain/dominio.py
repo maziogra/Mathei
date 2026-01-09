@@ -1,8 +1,7 @@
 import sympy as sp;
-
+# TODO SISTEMARE x^x, il dominio esce tutto insieme R
 #controllo esponent c.e.
-def dominio(funzione):
-   x=sp.symbols("x")
+def dominio(funzione, x):
    dominio=sp.S.Reals
    denominatore=sp.denom(sp.together(funzione))
    # ho una frazione tolgo gli zeri, poi c.e nel for per tutte
