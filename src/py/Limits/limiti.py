@@ -6,6 +6,23 @@ def visita(expr):
     for arg in expr.args:
         yield from visita(arg)
 
+def limiti_notevoli(expr, x):
+
+    if expr == sp.sin(x)/x:
+        print("Limite notevole: sin(x)/x → 1")
+
+    elif expr == (1 - sp.cos(x))/x**2:
+        print("Limite notevole: (1 - cos(x))/x^2 → 1/2")
+
+    elif expr == (sp.exp(x) - 1)/x:
+        print("Limite notevole: (e^x - 1)/x → 1")
+
+    elif expr == sp.log(1 + x)/x:
+        print("Limite notevole: ln(1+x)/x → 1")
+
+    elif expr == (1 + x)**(1/x):
+        print("Limite notevole: (1+x)^(1/x) → e")
+
 def limiti(f, x, x0):
     risultato = sp.limit(f, x, x0)
     for expr in visita(f):
@@ -37,5 +54,6 @@ def limiti(f, x, x0):
             lims = [sp.limit(a, x, x0) for a in expr.args]
             if 0 in lims and any(abs(l) == sp.oo for l in lims):
                 print("Forma indeterminata 0·∞ in", expr)
+        limiti_notevoli(expr, x)
 
     print(risultato)
