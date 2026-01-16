@@ -1,5 +1,5 @@
 import sympy as sp;
-from trovaPuntiCritici import trovaPuntiCritici;
+from segno.trovaPuntiCritici import trovaPuntiCritici;
 
 def segno(f, x):
     punti, gonio, controllo = trovaPuntiCritici(f, x);

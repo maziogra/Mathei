@@ -1,5 +1,5 @@
 import sympy as sp;
-from trovaPeriodo import trovaPeriodo;
+from segno.trovaPeriodo import trovaPeriodo;
 
 def trovaPuntiCritici(f, x):
     # trovo zeri e dominio da cui estrarro i punti critici
