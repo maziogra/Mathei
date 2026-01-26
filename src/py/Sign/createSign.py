@@ -1,13 +1,15 @@
+# Autore: Shahid
+
 import sympy as sp
 from Sign.trovaPuntiCritici import trovaPuntiCritici
 from Sign.addInfinite import addInfinite
 from Sign.test import test
 from Sign.analizer import analizer
-from Sign.findSolution import findSoluntion
+from Sign.findSolution import findSolution
 
 def createSign(f, x):
     signs = []
-    interlvals = []
+    intervals = []
     functionDomain = sp.calculus.util.continuous_domain(f, x, sp.S.Reals)
      
     # prova a interpretarla come polinomio in x 
@@ -26,32 +28,32 @@ def createSign(f, x):
     
     for element in signs:
         for interval in element[0]:
-            interlvals.append(interval)
+            intervals.append(interval)
 
     
-    print("Combined intervals:", interlvals)
-    interlvals = sorted(interlvals)
-    domain = sp.Intersection(sp.Interval(interlvals[0], interlvals[-1], left_open=False, right_open=False), functionDomain)
+    print("Combined intervals:", intervals)
+    intervals = sorted(intervals)
+    domain = sp.Intersection(sp.Interval(intervals[0], intervals[-1], left_open=False, right_open=False), functionDomain)
     sol = sp.solveset(f, x, domain=domain)
     
     if sol != sp.EmptySet:
         if isinstance(sol, sp.ConditionSet):
-            sol = findSoluntion(f, x)
-            interlvals += sorted(sol)
+            sol = findSolution(f, x)
+            intervals += sorted(sol)
         else:
             sol = list(sol)
-            interlvals += sorted(sol)
+            intervals += sorted(sol)
         print("solveset: ", sol)
 
-    interlvals = list(set(interlvals))
-    interlvals = sorted(interlvals)
-    print("Combined intervals:", interlvals)
+    intervals = list(set(intervals))
+    intervals = sorted(intervals)
+    print("Combined intervals:", intervals)
     
     # Aggiunge -oo e +oo agli intervalli se non sono presenti pi all'inizio e alla fine
-    addInfinite(interlvals)
+    addInfinite(intervals)
     
     finalsigns = []
-    finalsigns, interlvals = test(interlvals, finalsigns, f, x)
+    finalsigns, intervals = test(intervals, finalsigns, f, x)
     for i in range(len(finalsigns)):
-            print(f"Intervallo {interlvals[i]} -> {interlvals[i+1]}: segno {finalsigns[i]}")
+            print(f"Intervallo {intervals[i]} -> {intervals[i+1]}: segno {finalsigns[i]}")
     print("Continua poi come la funzione goniometrica singola...")

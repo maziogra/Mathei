@@ -1,6 +1,8 @@
+# Autore: Shahid
+
 import sympy as sp
 
-def findSoluntion(f, x):
+def findSolution(f, x):
     a = float(0)
     b = float(2 * sp.pi)
 

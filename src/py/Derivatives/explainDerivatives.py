@@ -1,15 +1,17 @@
+# Autore: Shahid del passato
+
 import sympy as sp
 
 def explainDerivatives(f, x):
     print(f"Funzione considerata: f(x) = {f}\n")
     if isinstance(f, sp.Add):
         print("Regola applicata: Somma")
-        termini = []
-        for termine in f.args:
-            print(f"Termine: {termine}")
-            d_termine = explainDerivatives(termine, x)
-            termini.append(d_termine)
-        derivative = sum(termini)
+        terms = []
+        for term in f.args:
+            print(f"Termine: {term}")
+            d_termine = explainDerivatives(term, x)
+            terms.append(d_termine)
+        derivative = sum(terms)
 
     elif isinstance(f, sp.Mul) and any(isinstance(arg, sp.Pow) and arg.exp == -1 for arg in f.args):
         num = sp.Mul(*[arg for arg in f.args if not (isinstance(arg, sp.Pow) and arg.exp == -1)])
@@ -25,19 +27,19 @@ def explainDerivatives(f, x):
 
     elif isinstance(f, sp.Mul):
         print("Regola applicata: derivata del prodotto")
-        fattori = f.args
-        n = len(fattori)
+        factors = f.args
+        n = len(factors)
 
-        termini_derivati = []
+        d_terms = []
         for i in range(n):
-            du_i = sp.diff(fattori[i], x)
-            altri_fattori = [fattori[j] for j in range(n) if j != i]
-            prodotto_altri = sp.Mul(*altri_fattori)
-            termine = du_i * prodotto_altri
-            print(f"  Derivata del fattore {i+1}: d({fattori[i]})/dx = {du_i}")
-            print(f"    → Termine: {du_i} * {' * '.join(str(f) for f in altri_fattori)} = {termine}")
-            termini_derivati.append(termine)
-        derivative = sum(termini_derivati)
+            du_i = sp.diff(factors[i], x)
+            other_factors = [factors[j] for j in range(n) if j != i]
+            product_others = sp.Mul(*other_factors)
+            term = du_i * product_others
+            print(f"  Derivata del fattore {i+1}: d({factors[i]})/dx = {du_i}")
+            print(f"    → Termine: {du_i} * {' * '.join(str(f) for f in other_factors)} = {term}")
+            d_terms.append(term)
+        derivative = sum(d_terms)
 
     elif isinstance(f, sp.Function):
         inner = f.args[0]

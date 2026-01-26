@@ -1,3 +1,6 @@
+# Autore: maziogra
+# Refactoring: Shahid
+
 import sympy as sp
 
 def addDomainPoints(domain, punti):

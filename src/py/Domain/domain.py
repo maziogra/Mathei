@@ -1,39 +1,41 @@
+# Autore: Khadija
+
 import sympy as sp
 
-def dominio(funzione):
+def domain(f):
     x = sp.symbols('x', real=True) # real=True importante se non non lo da come rational
     k = sp.symbols('k', integer=True)
     #d=R
     dom = sp.S.Reals
     
     #dinom
-    funzione_semplificata = sp.together(funzione)
-    denominatore = sp.denom(funzione_semplificata)
+    function_simplified = sp.together(f)
+    den = sp.denom(function_simplified)
     
-    if denominatore != 1:
+    if den != 1:
         try:
-            zeri_denom = sp.solveset(sp.Eq(denominatore, 0), x, sp.S.Reals)
-            if zeri_denom != sp.EmptySet:
-                dom = dom - zeri_denom
+            zero_den = sp.solveset(sp.Eq(den, 0), x, sp.S.Reals)
+            if zero_den != sp.EmptySet:
+                dom = dom - zero_den
         except:
             pass
     
     #funz nodo per nod
-    for sottoespressione in sp.preorder_traversal(funzione):
+    for underExp in sp.preorder_traversal(f):
         
         # esponenziali 
-        if isinstance(sottoespressione, sp.Pow):
-            base = sottoespressione.args[0]
-            esponente = sottoespressione.args[1]
+        if isinstance(underExp, sp.Pow):
+            base = underExp.args[0]
+            exp = underExp.args[1]
 
-            if esponente.is_Rational and esponente.q % 2 == 0 and esponente.p > 0: 
+            if exp.is_Rational and exp.q % 2 == 0 and exp.p > 0:
                 try:
                     cond = sp.solveset(sp.Ge(base, 0), x, dom)
                     dom = dom.intersect(cond)
                 except:
                     pass
 
-            elif esponente.is_Rational and esponente.q % 2 == 0 and esponente.p < 0:
+            elif exp.is_Rational and exp.q % 2 == 0 and exp.p < 0:
                 try:
                     cond = sp.solveset(sp.Gt(base, 0), x, dom) 
                     dom = dom.intersect(cond)
@@ -41,7 +43,7 @@ def dominio(funzione):
                     pass
             
             # esp irrazionale x^x
-            elif not esponente.is_Rational or esponente.has(x):
+            elif not exp.is_Rational or exp.has(x):
                 try:
                     cond = sp.solveset(sp.Gt(base, 0), x, dom)
                     dom = dom.intersect(cond)
@@ -49,8 +51,8 @@ def dominio(funzione):
                     pass
         
         #log
-        elif isinstance(sottoespressione, sp.log):
-            argomento = sottoespressione.args[0]
+        elif isinstance(underExp, sp.log):
+            argomento = underExp.args[0]
             try:
                 cond = sp.solveset(sp.Gt(argomento, 0), x, dom)
                 dom = dom.intersect(cond)
@@ -58,41 +60,41 @@ def dominio(funzione):
                 pass
         
         #tan, sec p/2
-        elif sottoespressione.func in (sp.tan, sp.sec):
-            arg = sottoespressione.args[0]
+        elif underExp.func in (sp.tan, sp.sec):
+            arg = underExp.args[0]
             try:
                 #periodo
                 coeff = arg.coeff(x) if arg.coeff(x) else 1
-                periodo = abs(coeff) if coeff != 0 else 1
+                period = abs(coeff) if coeff != 0 else 1
                 
-                if periodo == 1:
-                    esclusi = sp.ImageSet(sp.Lambda(k, sp.pi/2 + k*sp.pi), sp.S.Integers)
+                if period == 1:
+                    excluded = sp.ImageSet(sp.Lambda(k, sp.pi/2 + k*sp.pi), sp.S.Integers)
                 else:
-                    esclusi = sp.ImageSet(sp.Lambda(k, sp.pi/(2*periodo) + k*sp.pi/periodo), sp.S.Integers)
+                    excluded = sp.ImageSet(sp.Lambda(k, sp.pi/(2*period) + k*sp.pi/period), sp.S.Integers)
                 
-                dom = dom - esclusi
+                dom = dom - excluded
             except:
                 pass
         
         # cotn,cosc kp
-        elif sottoespressione.func in (sp.cot, sp.csc):
-            arg = sottoespressione.args[0]
+        elif underExp.func in (sp.cot, sp.csc):
+            arg = underExp.args[0]
             try:
                 coeff = arg.coeff(x) if arg.coeff(x) else 1
-                periodo = abs(coeff) if coeff != 0 else 1
+                period = abs(coeff) if coeff != 0 else 1
                 
-                if periodo == 1:
-                    esclusi = sp.ImageSet(sp.Lambda(k, k*sp.pi), sp.S.Integers)
+                if period == 1:
+                    excluded = sp.ImageSet(sp.Lambda(k, k*sp.pi), sp.S.Integers)
                 else:
-                    esclusi = sp.ImageSet(sp.Lambda(k, k*sp.pi/periodo), sp.S.Integers)
+                    excluded = sp.ImageSet(sp.Lambda(k, k*sp.pi/period), sp.S.Integers)
                 
-                dom = dom - esclusi
+                dom = dom - excluded
             except:
                 pass
         
         # arcos, arcsen -1,1
-        elif sottoespressione.func in (sp.asin, sp.acos):
-            arg = sottoespressione.args[0]
+        elif underExp.func in (sp.asin, sp.acos):
+            arg = underExp.args[0]
             try:
                 cond = sp.solveset(sp.And(arg >= -1, arg <= 1), x, dom)
                 dom = dom.intersect(cond)

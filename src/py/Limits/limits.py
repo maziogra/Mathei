@@ -1,12 +1,13 @@
-import sympy as sp
-import math as math
+# Autore: maziogra
 
-def visita(expr):
+import sympy as sp
+
+def visit(expr):
     yield expr
     for arg in expr.args:
-        yield from visita(arg)
+        yield from visit(arg)
 
-def limiti_notevoli(expr, x):
+def notableLimits(expr, x):
 
     if expr == sp.sin(x)/x:
         print("Limite notevole: sin(x)/x → 1")
@@ -23,9 +24,9 @@ def limiti_notevoli(expr, x):
     elif expr == (1 + x)**(1/x):
         print("Limite notevole: (1+x)^(1/x) → e")
 
-def limiti(f, x, x0):
-    risultato = sp.limit(f, x, x0)
-    for expr in visita(f):
+def limits(f, x, x0):
+    result = sp.limit(f, x, x0)
+    for expr in visit(f):
         if isinstance(expr, sp.Pow):
             base, exp = expr.args
             lb = sp.limit(base, x, x0)
@@ -54,6 +55,6 @@ def limiti(f, x, x0):
             lims = [sp.limit(a, x, x0) for a in expr.args]
             if 0 in lims and any(abs(l) == sp.oo for l in lims):
                 print("Forma indeterminata 0·∞ in", expr)
-        limiti_notevoli(expr, x)
+        notableLimits(expr, x)
 
-    print(risultato)
+    print(result)

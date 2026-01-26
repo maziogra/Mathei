@@ -1,7 +1,9 @@
+# Autore: Shahid
+
 import sympy as sp
-from Sign.test import test
-from Sign.addDomainPoints import addDomainPoints
-from Utils.trovaPeriodo import trovaPeriodo
+from test import test
+from addDomainPoints import addDomainPoints
+from Utils.findPeriod import findPeriod
 
 def findNearestPeriod(f, x, signs):
     periods = []
@@ -24,7 +26,7 @@ def findNearestPeriod(f, x, signs):
     # calculate the period of the goniometric function until the nearest extremes
     left = -1
     right = 1
-    period = trovaPeriodo(f, x)
+    period = findPeriod(f, x)
     leftExtreme = -float(period)
     rightExtreme = float(period)
     
