@@ -3,12 +3,18 @@
 
 from fastapi import FastAPI
 import sympy as sp
-from py.Domain.domain import domain # verificato
-from py.Intercepts.intersections import intersections #verificato 
-import py.Utils.findPeriod as findPeriod
-from py.Symmetries.Symmetries import symmetries # veirificato
-from py.Derivatives.explainDerivatives import explainDerivatives #verificato
+from Sign.createSign import createSign
+from Domain.domain import domain # verificato
+from Intercepts.intersections import intersections #verificato 
+import Utils.findPeriod as findPeriod
+from Symmetries.Symmetries import symmetries # veirificato
+from Derivatives.explainDerivatives import explainDerivatives #verificato
 app = FastAPI()
+
+x = sp.symbols("x")
+f = sp.exp(x**2) + sp.log(x**2 - 1)
+createSign(f, x)
+
 
 @app.get("/domain")
 async def get_domain(f: str | None = None):
@@ -25,7 +31,8 @@ async def get_domain(f: str | None = None):
         for i in expr.free_symbols:
             if i != x:
                 return {"msg": "Function is not correctly formatted"}
-        dominio = domain(expr)
+        dominio = domain(expr, x)
+        dominio = sp.pretty(dominio)
         
         return {
             "msg": "OK",

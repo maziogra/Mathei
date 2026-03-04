@@ -1,12 +1,13 @@
 # Autore: Shahid
 
 import sympy as sp
+from Sign.addDomainPoints import addDomainPoints
 
 def findSolution(f, x):
     a = float(0)
     b = float(2 * sp.pi)
 
-    guesses = [a + i*(b-a)/50 for i in range(1,50)]
+    guesses = [a + i*(b-a)/50 for i in range(-50,50)]
     solutions = set()
     for g in guesses:
         try:
@@ -34,4 +35,7 @@ def findSolution(f, x):
             else:
                 solutions[i] = val
     solutions = sorted(solutions)
+    domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Reals)
+    addDomainPoints(domain, solutions)
+    print("Nel pol: ", solutions)
     return solutions

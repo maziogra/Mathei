@@ -1,8 +1,8 @@
 # Autore: Shahid
 
 import sympy as sp
-from test import test
-from addDomainPoints import addDomainPoints
+from Sign.test import test
+from Sign.addDomainPoints import addDomainPoints
 from Utils.findPeriod import findPeriod
 
 def findNearestPeriod(f, x, signs):
@@ -42,6 +42,7 @@ def findNearestPeriod(f, x, signs):
         
     print("Searching zeros in interval:", (leftExtreme, rightExtreme))
     domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(leftExtreme, rightExtreme, left_open=False, right_open=False))
+    print("Domain in nearest period: ", domain)
     zeros = sp.solveset(f, x, domain=sp.Interval(leftExtreme, rightExtreme, left_open=False, right_open=False))
     if zeros == sp.EmptySet:
         zeros = []

@@ -2,8 +2,7 @@
 
 import sympy as sp
 
-def domain(f):
-    x = sp.symbols('x', real=True) # real=True importante se non non lo da come rational
+def domain(f, x):
     k = sp.symbols('k', integer=True)
     #d=R
     dom = sp.S.Reals
