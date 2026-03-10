@@ -57,4 +57,4 @@ def limits(f, x, x0):
                 print("Forma indeterminata 0·∞ in", expr)
         notableLimits(expr, x)
 
-    print(result)
+    return result

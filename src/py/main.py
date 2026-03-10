@@ -12,8 +12,8 @@ from Derivatives.explainDerivatives import explainDerivatives #verificato
 app = FastAPI()
 
 x = sp.symbols("x")
-f = sp.exp(x**2) + sp.log(x**2 - 1)
-createSign(f, x)
+f = sp.sqrt(4-x**2) + 2*sp.asin(x/2)
+intervals, signs = createSign(f, x)
 
 
 @app.get("/domain")

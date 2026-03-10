@@ -18,7 +18,7 @@ def findPeriod(f, x):
             period = 2*sp.pi / abs(coeff)
         elif isinstance(n, sp.tan):
             period = sp.pi / abs(coeff)
-        
+
         if period is not None:
             periods.append(period)
             
