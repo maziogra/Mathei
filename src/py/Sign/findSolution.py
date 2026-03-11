@@ -2,6 +2,7 @@
 
 import sympy as sp
 from Sign.addDomainPoints import addDomainPoints
+from Utils.simplifyPi import simplifyPi
 
 def findSolution(f, x):
     a = -float(2 * sp.pi)
@@ -18,9 +19,8 @@ def findSolution(f, x):
         except Exception:
             pass
 
-
     solutions = list(solutions)
-    solutions = [sp.nsimplify(v, [sp.pi]) for v in solutions]
+    solutions = [simplifyPi(v) for v in solutions]
     solutions = sorted(solutions)
     domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Reals)
     addDomainPoints(domain, solutions)
