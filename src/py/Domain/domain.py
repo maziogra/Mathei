@@ -103,6 +103,3 @@ def domain(f, x):
     
     print("dominio:", dom)
     return dom
-
-
-

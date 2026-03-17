@@ -12,8 +12,7 @@ def createSign(f, x):
     intervals = [i for i in set(intervals) if intervals.count(i) >= 1]
     intervals = sorted(intervals)
 
-    if len(intervals) != 0:
-        addInfinite(intervals)
+    addInfinite(intervals)
 
     print("Final intervals:")
     print(intervals)
