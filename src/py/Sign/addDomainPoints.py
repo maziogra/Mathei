@@ -5,7 +5,7 @@ import sympy as sp
 
 def addDomainPoints(domain, punti):
     if isinstance(domain, sp.Union):
-        for intervallo in domain   .args:
+        for intervallo in domain.args:
             for limite in [intervallo.start, intervallo.end]:
                 if limite in punti:
                     continue
@@ -17,3 +17,4 @@ def addDomainPoints(domain, punti):
                     continue
             if limite != sp.oo and limite != -sp.oo:
                 punti.append(limite)
+                print(punti)

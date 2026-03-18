@@ -5,8 +5,6 @@ from Sign.addDomainPoints import addDomainPoints
 from Utils.findPeriod import findPeriod
 
 def findNearestPeriod(f, x):
-    periods = []
-
     max_period = -sp.oo
     min_period = sp.oo
     
@@ -30,10 +28,8 @@ def findNearestPeriod(f, x):
 
     leftExtreme = left * period
     rightExtreme = right * period
-        
-    print("Searching zeros in interval:", (leftExtreme, rightExtreme))
+
     domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(leftExtreme, rightExtreme, left_open=False, right_open=False))
-    print("Domain in nearest period: ", domain)
     zeros = sp.solveset(f, x, domain=sp.Interval(leftExtreme, rightExtreme, left_open=False, right_open=False))
     if zeros == sp.EmptySet:
         zeros = []
@@ -41,5 +37,4 @@ def findNearestPeriod(f, x):
         zeros = list(zeros)
     addDomainPoints(domain, zeros)
     zeros = sorted(zeros)
-
     return zeros

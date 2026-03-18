@@ -25,7 +25,6 @@ def analizer(expr, x, flag = False):
                     res.append(i)
     elif getattr(expr, 'is_Add', False): 
         for i in findSolution(expr, x):
-            print("Nel add: ", i)
             res.append(i)
         return res
     else:

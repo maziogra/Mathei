@@ -4,6 +4,7 @@
 from Sign.addInfinite import addInfinite
 from Sign.test import test
 from Sign.analizer import analizer
+import sympy as sp
 
 def createSign(f, x):
 
@@ -11,6 +12,8 @@ def createSign(f, x):
 
     intervals = [i for i in set(intervals) if intervals.count(i) >= 1]
     intervals = sorted(intervals)
+    
+    intervals = [sp.sympify(i) for i in intervals]
 
     addInfinite(intervals)
 
