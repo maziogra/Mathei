@@ -1,8 +1,9 @@
 import sympy as sp
 from Limits.limits import limits
-from Domain.domain import domain     
+from Domain.domain import domain
+from Utils.findPeriod import findPeriod     
 
-def asintoti_discontinuita(f, x):
+def asymptotes(f, x):
     dominio = domain(f, x)  
     risultati = {}
 
@@ -54,6 +55,11 @@ def asintoti_discontinuita(f, x):
     #possibili verticali caso; x-1/(x**2-1)
     punti_da_analizzare = []
 
+    if f.has(sp.sin, sp.cos, sp.tan):
+        period = findPeriod(f, x)
+        dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-period, period, left_open=False, right_open=False)) 
+
+
     if isinstance(dominio, sp.Union):
         for intervallo in dominio.args:
             if hasattr(intervallo, 'left_open') and intervallo.left_open:
@@ -66,43 +72,27 @@ def asintoti_discontinuita(f, x):
         if dominio.right_open:
             punti_da_analizzare.append(dominio.end)
 
-    try:
-        sing = sp.singularities(f, x)
-        sing = [p for p in sing if p.is_real and not dominio.contains(p)]
-        punti_da_analizzare.extend(sing)
-    except Exception:
-        pass
-
     punti_da_analizzare = sorted(
-        {p for p in punti_da_analizzare if p != sp.oo and p != -sp.oo and p.is_real}
+        {p for p in punti_da_analizzare if p != sp.oo and p != -sp.oo}
     )
 
     #veriticlai ediscontinuita
-    punti_discontinuita = []
     asintoti_verticali = []
+
+    f = sp.expand_trig(f)
 
     for punto in punti_da_analizzare:
         try:
             lim_sx = limits(f, x, punto, '-')
             lim_dx = limits(f, x, punto, '+')
 
-            if not sp.simplify(lim_sx - lim_dx) == 0:
-                punti_discontinuita.append(punto)
-
             if abs(lim_sx) == sp.oo or abs(lim_dx) == sp.oo:
                 asintoti_verticali.append(punto)
-                if punto not in punti_discontinuita:
-                    punti_discontinuita.append(punto)
+            
 
         except Exception:
-            punti_discontinuita.append(punto)
             asintoti_verticali.append(punto)
 
-    risultati["punti di discontinuità"] = punti_discontinuita
     risultati["asintoti verticali"] = asintoti_verticali
 
     return risultati
-
-x= sp.symbols('x')
-f = x**3/(x**2-1)
-print(asintoti_discontinuita(f, x))

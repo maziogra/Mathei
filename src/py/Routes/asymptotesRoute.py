@@ -1,23 +1,22 @@
 from fastapi import APIRouter
 import sympy as sp
-from Domain.domain import domain
 from Utils.checkFunction import checkFunction
+from Asymptotes.asymptotes import asymptotes
 
 router = APIRouter()
 
-@router.get("/domain")
-async def get_domain(f: str | None = None):
+@router.get("/asymptotes")
+async def get_asymptotes(f: str | None = None):
     x = sp.symbols("x")
     f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
     result = checkFunction(f, x)
     
     if result == None:
-        dominio = sp.pretty(domain(f,x))
-
+        asintoti = asymptotes(f, x)
+        
         return {
             "msg": "OK",
-            "domain": str(dominio),
+            "derivative": str(asintoti),
         }
     else:
         return result
-    

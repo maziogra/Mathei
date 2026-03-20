@@ -1,28 +1,23 @@
 from fastapi import APIRouter
 import sympy as sp
-from Symmetries.symmetries import symmetries
+from Symmetries.Symmetries import symmetries
+from Utils.checkFunction import checkFunction
 
 router = APIRouter()
 
 @router.get("/symmetries")
 async def get_symmetries(f: str | None = None):
-    if f == None:
-        return {"msg": "No function was provided"}
+    x = sp.symbols("x")
+    f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
+    result = checkFunction(f, x)
     
-    else:
-        x = sp.symbols("x")
-        expr = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
-
-        if str(expr) == "zoo":
-            return {"msg": "Division by zero"}
-        
-        for i in expr.free_symbols:
-            if i != x:
-                return {"msg": "Function is not correctly formatted"}
-        
-        simmetria = symmetries(expr)
+    if result == None:
+     
+        simmetria = symmetries(f)
         
         return {
             "msg": "OK",
             "symmetry": simmetria,
         }
+    else:
+        return result

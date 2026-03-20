@@ -1,26 +1,18 @@
 from fastapi import APIRouter
 import sympy as sp
 from Sign.createSign import createSign
+from Utils.checkFunction import checkFunction
 
 router = APIRouter()
 
 @router.get("/sign")
 async def get_sign(f: str | None = None):
-    if f == None:
-        return {"msg": "No function was provided"}
+    x = sp.symbols("x")
+    f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
+    result = checkFunction(f, x)
     
-    else:
-        x = sp.symbols("x")
-        expr = sp.parse_expr(f, evaluate=True)
-
-        if str(expr) == "zoo":
-            return {"msg": "Division by zero"}
-        
-        for i in expr.free_symbols:
-            if i != x:
-                return {"msg": "Function is not correctly formatted"}
-        
-        intervals, signs = createSign(expr, x)
+    if result == None:
+        intervals, signs = createSign(f, x)
         
         signs_intervals = []
         for i in range(len(signs)):
@@ -30,3 +22,5 @@ async def get_sign(f: str | None = None):
             "msg": "OK",
             "signs_intervals": signs_intervals,
         }
+    else:
+        return result

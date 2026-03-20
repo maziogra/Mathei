@@ -1,26 +1,18 @@
 from fastapi import APIRouter
 import sympy as sp
 from Intercepts.intersections import intersections
+from Utils.checkFunction import checkFunction
 
 router = APIRouter()
 
 @router.get("/intersections")
 async def get_intersections(f: str | None = None):
-    if f == None:
-        return {"msg": "No function was provided"}
+    x = sp.symbols("x")
+    f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
+    result = checkFunction(f, x)
     
-    else:
-        x = sp.symbols("x")
-        expr = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
-
-        if str(expr) == "zoo":
-            return {"msg": "Division by zero"}
-        
-        for i in expr.free_symbols:
-            if i != x:
-                return {"msg": "Function is not correctly formatted"}
-        
-        result = intersections(expr)
+    if result == None:
+        result = intersections(f)
         
         punti = []
         for item in result:
@@ -33,3 +25,5 @@ async def get_intersections(f: str | None = None):
             "msg": "OK",
             "punti": punti,
         }
+    else:
+        return result

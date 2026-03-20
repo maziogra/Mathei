@@ -4,6 +4,8 @@ import sympy as sp
 from Sign.addDomainPoints import addDomainPoints
 from Utils.findPeriod import findPeriod
 
+# TODO controllare la funzione findNearestPeriod
+
 def findNearestPeriod(f, x):
     max_period = -sp.oo
     min_period = sp.oo
@@ -12,6 +14,7 @@ def findNearestPeriod(f, x):
     left = -1
     right = 1
     period = findPeriod(f, x)
+    print("----------------------",period)
 
     if period is None:
         return []

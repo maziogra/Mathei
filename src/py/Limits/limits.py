@@ -26,6 +26,8 @@ def notableLimits(expr, x):
 
 def limits(f, x, x0):
     result = sp.limit(f, x, x0)
+    if isinstance(result, sp.AccumBounds):
+        return None
     for expr in visit(f):
         if isinstance(expr, sp.Pow):
             base, exp = expr.args
