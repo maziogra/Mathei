@@ -19,11 +19,12 @@ def test(intervals, f, x):
             test = 0
 
         domain = sp.calculus.util.continuous_domain(f, x, sp.S.Reals)
-        check = (test in domain)
+        check = domain.contains(test)
         if not check:
             sign.append("Non definito")
         else: 
             valore = f.subs(x, test).evalf()
+
             if valore > 0:
                 sign.append('+')
             elif valore < 0:

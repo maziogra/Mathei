@@ -7,38 +7,25 @@ def minMax(f, x):
     f1 = sp.simplify(f1)
     intervals, signs = createSign(f1, x)
 
+    print(intervals)
     if(len(signs) == 1):
         return []
     
-    try:
-        intervals.remove(-sp.oo)
-        intervals.remove(sp.oo)
-    except:
-        print("Nessun infinito rimosso")
     
     d = domain(f, x)
 
-    if intervals[0] in d or f.subs(x, intervals[0]).evalf() != 0:
-        intervals.pop(0)
 
-    if intervals[-1] in d or f.subs(x, intervals[-1]).evalf() != 0:
-        intervals.pop(-1)
-
-    print("-----------", intervals[0] in d)
-
-    k = 0
     punti = []
-    sign_p = ""
+    prev = ""
+    curr = ""
 
-    for i in signs:
-        if k == 0:
-            sign_p = i
-        elif sign_p == "+" and i == "-":
-            punti.append((intervals[k-1], "max"))
-        elif sign_p == "-" and i == "+":
-            punti.append((intervals[k-1], "min"))
-        sign_p = i
-        k += 1
+    for i in range(1, len(signs)):
+        prev = signs[i-1]
+        curr = signs[i]
+        if prev == "+" and curr == "-":
+            punti.append((intervals[i], "max"))
+        elif prev == "-" and curr == "+":
+            punti.append((intervals[i], "min"))
 
-    punti = [i for i in punti if i[0] in d]
-    print(punti)
+    punti = [i for i in punti if d.contains(i[0])]
+    return punti

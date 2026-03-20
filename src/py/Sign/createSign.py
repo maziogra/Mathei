@@ -7,16 +7,18 @@ from Sign.analizer import analizer
 import sympy as sp
 
 def createSign(f, x):
-
     intervals = analizer(f, x)
-
+    
     intervals = [i for i in set(intervals) if intervals.count(i) >= 1]
     intervals = sorted(intervals)
     
+    
     intervals = [sp.sympify(i) for i in intervals]
-
-    addInfinite(intervals)
-
+    
+    f_exp = sp.expand_trig(f)
+    if not f_exp.has(sp.cos, sp.sin, sp.tan):
+        addInfinite(intervals)
+    
     print("Final intervals:")
     print(intervals)
 
