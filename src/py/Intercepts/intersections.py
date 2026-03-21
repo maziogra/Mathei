@@ -2,17 +2,19 @@
 
 import sympy as sp
 from Utils.findPeriod import findPeriod
+from Utils.findNearestPeriod import findNearestPeriod
 
 def intersections(f):
     x=sp.symbols("x")
-    R=sp.S.Reals
-    # if isGoniometric(f):
-    #  R=findPeriod(f, x)
+    d=sp.S.Reals
 
+    if isGoniometric(f):
+        a, b = findNearestPeriod(f, x)
+        d = sp.Interval(a, b)
     #int con asse x y=0
     intersectionsxy=[]
     try:
-        zeri = sp.solveset(f, x, R)
+        zeri = sp.solveset(f, x, d)
         print(zeri)
         if isinstance(zeri, sp.FiniteSet):
             for zero in zeri:

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from Routes import domainRoute, intersectionsRoute, symmetriesRoute, derivativesRoute, signRoute, asymptotesRoute, minMaxRoute
+from Utils.findNearestPeriod import findNearestPeriod
 import sympy as sp
-from minMax.minMax import minMax
 
 app = FastAPI()
 
