@@ -13,7 +13,7 @@ def addDomainPoints(domain, punti):
                     punti.append(limite)
     if isinstance(domain, sp.Interval):
         for limite in [domain.start, domain.end]:
-            if limite in punti:
+            if limite in punti or not domain.is_open:
                     continue
             if limite != sp.oo and limite != -sp.oo:
                 punti.append(limite)

@@ -12,7 +12,7 @@ async def get_sign(f: str | None = None):
     result = checkFunction(f, x)
     
     if result == None:
-        intervals, signs = createSign(f, x)
+        intervals, signs, warning = createSign(f, x)
         
         signs_intervals = []
         for i in range(len(signs)):
@@ -21,6 +21,7 @@ async def get_sign(f: str | None = None):
         return {
             "msg": "OK",
             "signs_intervals": signs_intervals,
+            "warning": warning,
         }
     else:
         return result

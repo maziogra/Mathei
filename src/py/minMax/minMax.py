@@ -23,9 +23,9 @@ def minMax(f, x):
         prev = signs[i-1]
         curr = signs[i]
         if prev == "+" and curr == "-":
-            punti.append((intervals[i], "max"))
+            punti.append((intervals[i], f.subs(x, intervals[i]).evalf(), "max"))
         elif prev == "-" and curr == "+":
-            punti.append((intervals[i], "min"))
+            punti.append((intervals[i], f.subs(x, intervals[i]).evalf(), "min"))
 
     punti = [i for i in punti if d.contains(i[0])]
     return punti

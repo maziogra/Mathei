@@ -7,7 +7,7 @@ from Sign.analizer import analizer
 import sympy as sp
 
 def createSign(f, x):
-    intervals = analizer(f, x)
+    intervals, warning = analizer(f, x)
     
     intervals = [i for i in set(intervals) if intervals.count(i) >= 1]
     intervals = sorted(intervals)
@@ -26,4 +26,4 @@ def createSign(f, x):
     print("Signs: ")
     print(signs)
 
-    return intervals, signs
+    return intervals, signs, warning
