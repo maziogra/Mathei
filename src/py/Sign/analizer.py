@@ -9,14 +9,16 @@ def analizer(expr, x):
     warning = False
 
     if expr.is_polynomial(x):
-        for i in findCriticalPoints(expr, x):
+        points, warning = findCriticalPoints(arg, x)
+        for i in points:
             res.append(i)
         return res, warning
     
     # Mul, Add ecc. con i metodi di sympy
     if getattr(expr, 'is_Mul', False):
         for arg in expr.args:
-            for i in findCriticalPoints(arg, x):
+            points, warning = findCriticalPoints(arg, x)
+            for i in points:
                 res.append(i)    
     elif getattr(expr, 'is_Add', False): 
         for i in findSolution(expr, x):
@@ -24,7 +26,8 @@ def analizer(expr, x):
             res.append(i)
         return res, warning
     else:
-        for i in findCriticalPoints(expr, x):
+        points, warning = findCriticalPoints(arg, x)
+        for i in points:
             res.append(i)
 
     return res, warning

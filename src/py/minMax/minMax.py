@@ -5,7 +5,7 @@ from Domain.domain import domain
 def minMax(f, x):
     f1 = sp.diff(f, x)
     f1 = sp.simplify(f1)
-    intervals, signs = createSign(f1, x)
+    intervals, signs, warning = createSign(f1, x)
 
     print(intervals)
     if(len(signs) == 1):
@@ -28,4 +28,4 @@ def minMax(f, x):
             punti.append((intervals[i], f.subs(x, intervals[i]).evalf(), "min"))
 
     punti = [i for i in punti if d.contains(i[0])]
-    return punti
+    return punti, warning

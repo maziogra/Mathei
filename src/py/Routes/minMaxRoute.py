@@ -12,11 +12,12 @@ async def get_intersections(f: str | None = None):
     result = checkFunction(f, x)
     
     if result == None:
-        punti = minMax(f, x) 
+        punti, warning = minMax(f, x) 
         
         return {
             "msg": "OK",
             "punti": str(punti),
+            "warning": warning
         }
     else:
         return result

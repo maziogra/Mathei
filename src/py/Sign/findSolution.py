@@ -11,7 +11,13 @@ def findSolution(f, x):
 
     f_exp = sp.expand_trig(f)
     if f_exp.has(sp.cos, sp.sin, sp.tan):
-        a, b = findNearestPeriod(f_exp, x)
+        result = findNearestPeriod(f_exp, x)
+
+        if result == []:
+            return result
+        else:
+            a, b = result
+        
         a = float(a)
         b = float(b)
         print(a, b)
@@ -25,11 +31,6 @@ def findSolution(f, x):
         in_domain = d.contains(guesses[i]) and d.contains(guesses[i+1])
 
         if not in_domain:
-            continue
-
-        eq_sign = sp.sign(f.subs(x, guesses[i]).evalf()) == sp.sign(f.subs(x, guesses[i+1]).evalf())
-        
-        if eq_sign:
             continue
 
         try:

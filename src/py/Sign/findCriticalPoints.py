@@ -12,7 +12,12 @@ def findCriticalPoints(f, x, flag = False):
 
     f = sp.expand_trig(f)
     if f.has(sp.cos, sp.sin, sp.tan):
-        a, b = findNearestPeriod(f, x)
+        result = findNearestPeriod(f, x)
+
+        if result == []:
+            return result, True
+        else:
+            a, b = result
 
 
     # trovo zeri e dominio da cui estrarro i punti critici
@@ -29,4 +34,5 @@ def findCriticalPoints(f, x, flag = False):
 
     # metto nell'insieme dei punti anche i punti in cui la funz non esiste
     addDomainPoints(domain, points)
-    return points
+    
+    return points, False
