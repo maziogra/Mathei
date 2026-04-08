@@ -1,7 +1,7 @@
 import sympy as sp
-from Limits.limits import limits
-from Domain.domain import domain
-from Utils.findPeriod import findPeriod     
+from core.Limits.limits import limits
+from core.Domain.domain import domain
+from core.Utils.findPeriod import findPeriod     
 
 def asymptotes(f, x):
     dominio = domain(f, x)  

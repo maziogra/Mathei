@@ -1,21 +1,22 @@
 from fastapi import APIRouter
 import sympy as sp
-from Utils.checkFunction import checkFunction
+from core.Utils.checkFunction import checkFunction
+from core.Asymptotes.asymptotes import asymptotes
 
 router = APIRouter()
 
-@router.get("/derivatives")
-async def get_derivatives(f: str | None = None):
+@router.get("/asymptotes")
+async def get_asymptotes(f: str | None = None):
     x = sp.symbols("x")
     f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
     result = checkFunction(f, x)
     
     if result == None:
-        derivative = sp.diff(f, x)
+        asintoti = asymptotes(f, x)
         
         return {
             "msg": "OK",
-            "derivative": str(derivative),
+            "derivative": str(asintoti),
         }
     else:
         return result

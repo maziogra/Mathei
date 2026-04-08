@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import sympy as sp
-from Sign.createSign import createSign
-from Utils.checkFunction import checkFunction
+from core.Sign.createSign import createSign
+from core.Utils.checkFunction import checkFunction
 
 router = APIRouter()
 

@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import sympy as sp
-from Intercepts.intersections import intersections
-from Utils.checkFunction import checkFunction
+from core.Intercepts.intersections import intersections
+from core.Utils.checkFunction import checkFunction
 
 router = APIRouter()
 

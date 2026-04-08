@@ -1,8 +1,8 @@
 # Autore: Khadija
 
 import sympy as sp
-from Utils.findPeriod import findPeriod
-from Utils.findNearestPeriod import findNearestPeriod
+from core.Utils.findPeriod import findPeriod
+from core.Utils.findNearestPeriod import findNearestPeriod
 
 def intersections(f):
     x=sp.symbols("x")

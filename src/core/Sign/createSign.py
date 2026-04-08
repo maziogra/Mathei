@@ -1,9 +1,9 @@
 # Autore: Shahid
 # Refactoring TOTALE: tutti
 
-from Sign.addInfinite import addInfinite
-from Sign.test import test
-from Sign.analizer import analizer
+from core.Sign.addInfinite import addInfinite
+from core.Sign.test import test
+from core.Sign.analizer import analizer
 import sympy as sp
 
 def createSign(f, x):

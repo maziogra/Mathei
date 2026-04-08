@@ -2,8 +2,8 @@
 # Refactoring: maziogra
 
 import sympy as sp
-from Utils.findPeriod import findPeriod
-from Domain.domain import domain as findDomain
+from core.Utils.findPeriod import findPeriod
+from core.Domain.domain import domain as findDomain
 
 def findNearestPeriod(f, x):
     period = findPeriod(f, x)

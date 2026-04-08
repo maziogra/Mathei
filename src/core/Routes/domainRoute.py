@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import sympy as sp
-from Domain.domain import domain
-from Utils.checkFunction import checkFunction
+from core.Domain.domain import domain
+from core.Utils.checkFunction import checkFunction
 
 router = APIRouter()
 

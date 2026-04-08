@@ -1,8 +1,8 @@
 # Autore: Shahid
 
 import sympy as sp
-from Sign.findCriticalPoints import findCriticalPoints
-from Sign.findSolution import findSolution
+from core.Sign.findCriticalPoints import findCriticalPoints
+from core.Sign.findSolution import findSolution
 
 def analizer(expr, x):
     res = []

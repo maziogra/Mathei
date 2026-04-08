@@ -1,23 +1,21 @@
 from fastapi import APIRouter
 import sympy as sp
-from Utils.checkFunction import checkFunction
-from minMax.minMax import minMax
+from core.Utils.checkFunction import checkFunction
 
 router = APIRouter()
 
-@router.get("/minMax")
-async def get_intersections(f: str | None = None):
+@router.get("/derivatives")
+async def get_derivatives(f: str | None = None):
     x = sp.symbols("x")
     f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
     result = checkFunction(f, x)
     
     if result == None:
-        punti, warning = minMax(f, x) 
+        derivative = sp.diff(f, x)
         
         return {
             "msg": "OK",
-            "punti": str(punti),
-            "warning": warning
+            "derivative": str(derivative),
         }
     else:
         return result

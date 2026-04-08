@@ -1,22 +1,23 @@
 from fastapi import APIRouter
 import sympy as sp
-from Utils.checkFunction import checkFunction
-from Asymptotes.asymptotes import asymptotes
+from core.Utils.checkFunction import checkFunction
+from core.minMax.minMax import minMax
 
 router = APIRouter()
 
-@router.get("/asymptotes")
-async def get_asymptotes(f: str | None = None):
+@router.get("/minMax")
+async def get_intersections(f: str | None = None):
     x = sp.symbols("x")
     f = sp.parse_expr(f, local_dict={"x": x}, evaluate=True)
     result = checkFunction(f, x)
     
     if result == None:
-        asintoti = asymptotes(f, x)
+        punti, warning = minMax(f, x) 
         
         return {
             "msg": "OK",
-            "derivative": str(asintoti),
+            "punti": str(punti),
+            "warning": warning
         }
     else:
         return result

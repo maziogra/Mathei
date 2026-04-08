@@ -2,9 +2,9 @@
 # Refactoring: Shahid
 
 import sympy as sp
-from Sign.addDomainPoints import addDomainPoints
-from Utils.findNearestPeriod import findNearestPeriod
-from Sign.test import test
+from core.Sign.addDomainPoints import addDomainPoints
+from core.Utils.findNearestPeriod import findNearestPeriod
+from core.Sign.test import test
 
 def findCriticalPoints(f, x, flag = False):
     a = -sp.oo

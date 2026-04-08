@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 import sympy as sp
-from Symmetries.Symmetries import symmetries
-from Utils.checkFunction import checkFunction
+from core.Symmetries.Symmetries import symmetries
+from core.Utils.checkFunction import checkFunction
 
 router = APIRouter()
 

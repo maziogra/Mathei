@@ -1,6 +1,6 @@
 import sympy as sp
-from Sign.createSign import createSign 
-from Domain.domain import domain
+from core.Sign.createSign import createSign 
+from core.Domain.domain import domain
 
 def minMax(f, x):
     f1 = sp.diff(f, x)

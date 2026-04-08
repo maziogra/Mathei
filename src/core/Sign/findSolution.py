@@ -1,9 +1,9 @@
 # Autore: Shahid
 
 import sympy as sp
-from Sign.addDomainPoints import addDomainPoints
-from Utils.simplifyPi import simplifyPi
-from Utils.findNearestPeriod import findNearestPeriod
+from core.Sign.addDomainPoints import addDomainPoints
+from core.Utils.simplifyPi import simplifyPi
+from core.Utils.findNearestPeriod import findNearestPeriod
 
 def findSolution(f, x):
     a = -float(100)
