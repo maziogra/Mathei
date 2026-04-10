@@ -1,0 +1,7 @@
+sympy
+fastapi[standard]
+pymysql
+sqlalchemy
+pyjwt
+bcrypt
+python-dotenv

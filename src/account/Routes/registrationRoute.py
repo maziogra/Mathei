@@ -9,11 +9,11 @@ router = APIRouter()
 
 @router.get("/registration")
 async def login(
-    username: str,
+    email: str,
     password: str | None = None,
     db: Session = Depends(get_db)
 ):
-    results = select(User).where(username == User.email)
+    results = select(User).where(email == User.email)
     result = db.scalars(results).first()
     if result:
         return {"error": "already registered email"}
@@ -23,7 +23,7 @@ async def login(
 
     pswHash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
-    user = User(id=0, email=username, password=pswHash)
+    user = User(id=0, email=email, password=pswHash)
 
     db.add(user)
     db.commit()
