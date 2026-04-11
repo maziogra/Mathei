@@ -11,13 +11,8 @@ def findNearestPeriod(f, x):
 
     if period is None:
         return []
-    
+
     a = 0
     b = period
-
-    while a not in d or b not in d:
-        a = b
-        b += period
     
     return a, b
-

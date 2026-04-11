@@ -26,7 +26,7 @@ def analizer(expr, x):
             res.append(i)
         return res, warning
     else:
-        points, warning = findCriticalPoints(arg, x)
+        points, warning = findCriticalPoints(expr, x)
         for i in points:
             res.append(i)
 

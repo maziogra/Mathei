@@ -7,21 +7,20 @@ def domain(f, x):
     #d=R
     dom = sp.S.Reals
     
-    #dinom
-    function_simplified = sp.together(f)
-    den = sp.denom(function_simplified)
-    
-    if den != 1:
-        try:
-            zero_den = sp.solveset(sp.Eq(den, 0), x, sp.S.Reals)
-            if zero_den != sp.EmptySet:
-                dom = dom - zero_den
-        except:
-            pass
-    
     #funz nodo per nod
     for underExp in sp.preorder_traversal(f):
+
+        function_simplified = sp.together(underExp)
+        den = sp.denom(function_simplified)
         
+        if den != 1:
+            try:
+                zero_den = sp.solveset(sp.Eq(den, 0), x, sp.S.Reals)
+                if zero_den != sp.EmptySet:
+                    dom = dom - zero_den
+            except:
+                pass
+
         # esponenziali 
         if isinstance(underExp, sp.Pow):
             base = underExp.args[0]
