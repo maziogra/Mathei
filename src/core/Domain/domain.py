@@ -57,20 +57,22 @@ def domain(f, x):
             except:
                 pass
         
-        #tan, sec p/2
+        #tan, sec p/2 
         elif underExp.func in (sp.tan, sp.sec):
             arg = underExp.args[0]
             try:
-                #periodo
-                coeff = arg.coeff(x) if arg.coeff(x) else 1
-                period = abs(coeff) if coeff != 0 else 1
-                
-                if period == 1:
-                    excluded = sp.ImageSet(sp.Lambda(k, sp.pi/2 + k*sp.pi), sp.S.Integers)
-                else:
-                    excluded = sp.ImageSet(sp.Lambda(k, sp.pi/(2*period) + k*sp.pi/period), sp.S.Integers)
-                
-                dom = dom - excluded
+                for punti in [sp.pi/2, 3*sp.pi/2]:
+                    sol = sp.solveset(sp.Eq(arg, punti), x, domain=dom)
+                    if sol != sp.EmptySet and sol.is_FiniteSet:
+                        base = list(sol)[0]  # se è piriodica basta la piram sol
+                        
+                        period = 1 # findperiod
+                        if period is not None:
+                            cond = sp.ImageSet(sp.Lambda(k, base + k*period*sp.pi), sp.S.Integers)
+                            dom = dom - cond
+                            break
+                        else:
+                            dom = dom - sol   
             except:
                 pass
         
@@ -78,15 +80,18 @@ def domain(f, x):
         elif underExp.func in (sp.cot, sp.csc):
             arg = underExp.args[0]
             try:
-                coeff = arg.coeff(x) if arg.coeff(x) else 1
-                period = abs(coeff) if coeff != 0 else 1
-                
-                if period == 1:
-                    excluded = sp.ImageSet(sp.Lambda(k, k*sp.pi), sp.S.Integers)
-                else:
-                    excluded = sp.ImageSet(sp.Lambda(k, k*sp.pi/period), sp.S.Integers)
-                
-                dom = dom - excluded
+                for punti in [sp.pi, 2*sp.pi]:
+                    sol = sp.solveset(sp.Eq(arg, punti), x, domain=dom)
+                    if sol != sp.EmptySet and sol.is_FiniteSet:
+                        base = list(sol)[0]  # se è piriodica basta la piram sol
+                        
+                        period = 0 # findperiod
+                        if period is not None:
+                            cond = sp.ImageSet(sp.Lambda(k, base + k*period*sp.pi), sp.S.Integers)
+                            dom = dom - cond
+                            break
+                        else:
+                            dom = dom - sol   
             except:
                 pass
         
@@ -98,7 +103,12 @@ def domain(f, x):
                 dom = dom.intersect(cond)
             except:
                 pass
+                
         
     
     print("dominio:", dom)
     return dom
+
+x = sp.symbols("x")
+f = sp.tan(sp.sin(sp.sqrt(x)))
+domain(f, x)
