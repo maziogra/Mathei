@@ -1,3 +1,5 @@
+# Autore: Khadija
+
 import sympy as sp
 from core.Limits.limits import limits
 from core.Domain.domain import domain
@@ -57,6 +59,8 @@ def asymptotes(f, x):
 
     if f.has(sp.sin, sp.cos, sp.tan):
         period = findPeriod(f, x)
+        if not period:
+            return [], True
         dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-period, period, left_open=False, right_open=False)) 
 
 
@@ -95,4 +99,4 @@ def asymptotes(f, x):
 
     risultati["asintoti verticali"] = asintoti_verticali
 
-    return risultati
+    return risultati, False

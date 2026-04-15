@@ -9,7 +9,7 @@ def minMax(f, x):
 
     print(intervals)
     if(len(signs) == 1):
-        return []
+        return [], warning
     
     
     d = domain(f, x)

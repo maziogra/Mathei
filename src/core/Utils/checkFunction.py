@@ -1,14 +1,15 @@
+from fastapi import HTTPException
 import sympy as sp
 
 def checkFunction(f, x):
     if f == None:
-        return {"msg": "No function was provided"}
+        raise HTTPException(status_code=400, detail="No function was provided")
     else:
         if str(f) == "zoo":
-            return {"msg": "Division by zero"}
+            raise HTTPException(status_code=400, detail="Division by zero")
         
         for i in f.free_symbols:
             if i != x:
-                return {"msg": "Function is not correctly formatted"}
+                raise HTTPException(status_code=400, detail="Function is not correctly formatted")
     
     return None

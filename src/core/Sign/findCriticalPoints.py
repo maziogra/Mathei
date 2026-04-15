@@ -13,7 +13,6 @@ def findCriticalPoints(f, x, flag = False):
     f = sp.expand_trig(f)
     if f.has(sp.cos, sp.sin, sp.tan):
         result = findNearestPeriod(f, x)
-        print("---------------------", result)
         if result == []:
             return result, True
         else:
@@ -26,7 +25,6 @@ def findCriticalPoints(f, x, flag = False):
     elif isinstance(points, sp.Interval):
         points = [points.start, points.end]
     else:
-        print("###########################", points)
         points = list(points)
     domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
     points.append(a)

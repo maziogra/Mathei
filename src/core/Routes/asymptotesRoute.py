@@ -12,11 +12,12 @@ async def get_asymptotes(f: str | None = None):
     result = checkFunction(f, x)
     
     if result == None:
-        asintoti = asymptotes(f, x)
+        asintoti, warning = asymptotes(f, x)
         
         return {
             "msg": "OK",
-            "derivative": str(asintoti),
+            "asymptotes": str(asintoti),
+            "warning": warning
         }
     else:
         return result

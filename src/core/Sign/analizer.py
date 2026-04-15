@@ -9,7 +9,7 @@ def analizer(expr, x):
     warning = False
 
     if expr.is_polynomial(x):
-        points, warning = findCriticalPoints(arg, x)
+        points, warning = findCriticalPoints(expr, x)
         for i in points:
             res.append(i)
         return res, warning
