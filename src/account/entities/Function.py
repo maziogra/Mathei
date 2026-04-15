@@ -6,7 +6,7 @@ from account.entities.Base import Base
 
 class Function(Base):
     __tablename__ = "functions"
-    id: Mapped[int] = mapped_column(primary_key=True)
+    id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
     function: Mapped[str] = mapped_column(String(250))
 

@@ -19,8 +19,7 @@ async def get_sign(f: str | None = None):
             signs_intervals.append((str(intervals[i]), str(intervals[i+1]), signs[i]))
         
         return {
-            "msg": "OK",
-            "signs_intervals": signs_intervals,
+            "msg": signs_intervals,
             "warning": warning,
         }
     else:

@@ -15,8 +15,7 @@ async def get_domain(f: str | None = None):
         dominio = sp.pretty(domain(f,x))
 
         return {
-            "msg": "OK",
-            "domain": str(dominio),
+            "msg": str(dominio)
         }
     else:
         return result

@@ -22,8 +22,7 @@ async def get_intersections(f: str | None = None):
                 punti.append(item)
         
         return {
-            "msg": "OK",
-            "punti": punti,
+            "msg": punti
         }
     else:
         return result

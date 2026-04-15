@@ -8,7 +8,7 @@ from account.Utils.getJWT import getJWT
 
 router = APIRouter()
 
-@router.get("/login")
+@router.post("/login")
 async def login(
     email: str,
     password: str | None = None,
@@ -16,7 +16,7 @@ async def login(
 ):
     stmt = select(User).where(User.email == email)
     result = db.scalars(stmt).first()
-
+    
     if not result:
         return {"error": "User not found"}
 

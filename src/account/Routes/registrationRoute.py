@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from account.entities.User import User
@@ -7,7 +7,7 @@ import bcrypt
 
 router = APIRouter()
 
-@router.get("/registration")
+@router.post("/registration")
 async def login(
     email: str,
     password: str | None = None,
@@ -16,10 +16,10 @@ async def login(
     results = select(User).where(email == User.email)
     result = db.scalars(results).first()
     if result:
-        return {"error": "already registered email"}
+        raise HTTPException(status_code=400, detail="Already registered email")
     
     if not password:
-        return {"error": "no password provided"}
+        raise HTTPException(status_code=400, detail="No password provided")
 
     pswHash = bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 

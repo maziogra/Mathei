@@ -16,8 +16,7 @@ async def get_symmetries(f: str | None = None):
         simmetria = symmetries(f)
         
         return {
-            "msg": "OK",
-            "symmetry": simmetria,
+            "msg": simmetria,
         }
     else:
         return result

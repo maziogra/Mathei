@@ -15,8 +15,7 @@ async def get_asymptotes(f: str | None = None):
         asintoti, warning = asymptotes(f, x)
         
         return {
-            "msg": "OK",
-            "asymptotes": str(asintoti),
+            "msg": str(asintoti),
             "warning": warning
         }
     else:

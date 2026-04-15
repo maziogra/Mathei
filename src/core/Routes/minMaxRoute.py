@@ -15,8 +15,7 @@ async def get_intersections(f: str | None = None):
         punti, warning = minMax(f, x) 
         
         return {
-            "msg": "OK",
-            "punti": str(punti),
+            "msg": str(punti),
             "warning": warning
         }
     else:

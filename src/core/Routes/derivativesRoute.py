@@ -14,8 +14,7 @@ async def get_derivatives(f: str | None = None):
         derivative = sp.diff(f, x)
         
         return {
-            "msg": "OK",
-            "derivative": str(derivative),
+            "msg": str(derivative)
         }
     else:
         return result
