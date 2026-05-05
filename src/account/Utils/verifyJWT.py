@@ -6,7 +6,7 @@ import os
 security = HTTPBearer()
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-def verify_jwt(credentials: HTTPAuthorizationCredentials = Depends(security)):
+def verifyJWT(credentials: HTTPAuthorizationCredentials = Depends(security)):
     token = credentials.credentials
     
     try:
