@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 from account.entities.User import User
@@ -18,10 +18,10 @@ async def login(
     result = db.scalars(stmt).first()
     
     if not result:
-        return {"error": "User not found"}
+        raise HTTPException(status_code=400, detail="User not found")
 
     if bcrypt.checkpw(user.password.encode(), result.password.encode()):
         token = getJWT({"id": result.id, "mail": result.email})
-        return {"msg": "ok", "token": token}
+        return {"token": token}
     else:
-        return {"error": "Wrong password"}
+        raise HTTPException(status_code=400, detail="Wrong password")

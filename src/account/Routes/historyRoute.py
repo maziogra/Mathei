@@ -1,17 +1,48 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
+from typing import Dict, Any
+from pymysql import IntegrityError
 from sqlalchemy import select
 from sqlalchemy.orm import Session
-from account.entities.User import User
+from account.entities.Function import Function
 from account.Utils.getDb import get_db
 from account.Utils.verifyJWT import verifyJWT
+from fastapi import Body
 
 router = APIRouter()
 
 @router.post("/history")
 async def postHistory(
-    f: str,
+    data: Dict[str, Any] = Body(...),
     payload=Depends(verifyJWT),
     db: Session = Depends(get_db)
 ):
-    print(payload.id, "-------", f)
+  
+    f = Function(
+        user_id=payload["id"],
+        function=data["f"]
+    )
+
+    try:
+        db.add(f)
+        db.commit()
+
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Internal server error")
+    
     return {"msg": "ok"}
+
+@router.get("/history")
+async def getHistory(
+    elements: int = 10,
+    offset: int = 0,
+    payload=Depends(verifyJWT),
+    db: Session = Depends(get_db)
+):
+    if elements > 25:
+        elements = 25
+    
+    stmt = select(Function).where(Function.user_id == payload["id"]).limit(elements).offset(offset)
+    result = db.scalars(stmt).all()
+    
+    return {"functions": result}

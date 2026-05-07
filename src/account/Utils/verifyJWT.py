@@ -1,9 +1,11 @@
 from fastapi import Depends, HTTPException
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 import jwt
+from dotenv import load_dotenv
 import os
 
 security = HTTPBearer()
+load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 def verifyJWT(credentials: HTTPAuthorizationCredentials = Depends(security)):
