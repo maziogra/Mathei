@@ -1,9 +1,28 @@
+# =========================
+# PYTHON / FASTAPI
+# =========================
+
+# Virtual environment
+venv/
+.venv/
+ENV/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+
+# Environment variables
+.env
+
+# Windows venv files
 Include/
 Lib/
 Scripts/
-share/
-__pycache__/
-.idea/
-.vscode/
 pyvenv.cfg
-.env

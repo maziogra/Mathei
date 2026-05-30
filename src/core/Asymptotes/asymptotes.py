@@ -27,31 +27,52 @@ def asymptotes(f, x):
         pass
 
     risultati["asintoti orizzontali"] = asintoti_orizzontali
+    
     #obliqui
     asintoti_obliqui = []
 
     try:
         if limits(f, x, sp.oo) not in asintoti_orizzontali:
+
             m_pos = limits(f / x, x, sp.oo)
+
             if m_pos.is_real and m_pos != 0 and m_pos.is_finite:
+
                 q_pos = limits(f - m_pos * x, x, sp.oo)
+
                 if q_pos.is_finite:
-                    asintoti_obliqui.append((m_pos, q_pos))
+                    asintoti_obliqui.append([
+                        float(m_pos),
+                        float(q_pos)
+                    ])
+
     except Exception:
         pass
+
 
     try:
         if limits(f, x, -sp.oo) not in asintoti_orizzontali:
+
             m_neg = limits(f / x, x, -sp.oo)
+
             if m_neg.is_real and m_neg != 0 and m_neg.is_finite:
+
                 q_neg = limits(f - m_neg * x, x, -sp.oo)
+
                 if q_neg.is_finite:
-                    asint = (m_neg, q_neg)
+
+                    asint = [
+                        float(m_neg),
+                        float(q_neg)
+                    ]
+
                     if asint not in asintoti_obliqui:
                         asintoti_obliqui.append(asint)
+
     except Exception:
         pass
-
+        
+        
     risultati["asintoti obliqui"] = asintoti_obliqui   # (m,q),(m1,q1)...
 
     #possibili verticali caso; x-1/(x**2-1)

@@ -19,7 +19,8 @@ async def postHistory(
   
     f = Function(
         user_id=payload["id"],
-        function=data["f"]
+        function=data["f"],
+        latex=data["latex"]
     )
 
     try:

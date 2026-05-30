@@ -5,109 +5,100 @@ from core.Utils.findPeriod import findPeriod
 
 def domain(f, x):
     k = sp.symbols('k', integer=True)
-    #d=R
     dom = sp.S.Reals
-    
-    #funz nodo per nod
+
     for underExp in sp.preorder_traversal(f):
 
+        # --- Denominatore ---
         function_simplified = sp.together(underExp)
         den = sp.denom(function_simplified)
-        
+
         if den != 1:
             try:
                 zero_den = sp.solveset(sp.Eq(den, 0), x, sp.S.Reals)
-                print(den, "###############", zero_den)
                 if zero_den != sp.EmptySet:
                     dom = dom - zero_den
-            except:
+            except Exception:
                 pass
 
-        # esponenziali 
+        # --- Potenze / radici ---
         if isinstance(underExp, sp.Pow):
             base = underExp.args[0]
-            exp = underExp.args[1]
+            exp  = underExp.args[1]
 
             if exp.is_Rational and exp.q % 2 == 0 and exp.p > 0:
+                # radice pari con esponente positivo: base >= 0
                 try:
-                    cond = sp.solveset(sp.Ge(base, 0), x, dom)
+                    cond = sp.solveset(sp.Ge(base, 0), x, sp.S.Reals)
                     dom = dom.intersect(cond)
-                except:
+                except Exception:
                     pass
 
             elif exp.is_Rational and exp.q % 2 == 0 and exp.p < 0:
+                # radice pari con esponente negativo: base > 0
                 try:
-                    cond = sp.solveset(sp.Gt(base, 0), x, dom) 
+                    cond = sp.solveset(sp.Gt(base, 0), x, sp.S.Reals)
                     dom = dom.intersect(cond)
-                except:
+                except Exception:
                     pass
-            
-            # esp irrazionale x^x
+
             elif not exp.is_Rational or exp.has(x):
+                # esponente irrazionale (x^x ecc.): base > 0
                 try:
-                    cond = sp.solveset(sp.Gt(base, 0), x, dom)
+                    cond = sp.solveset(sp.Gt(base, 0), x, sp.S.Reals)
                     dom = dom.intersect(cond)
-                except:
+                except Exception:
                     pass
-        
-        #log
+
+        # --- Logaritmo ---
         elif isinstance(underExp, sp.log):
-            argomento = underExp.args[0]
+            arg = underExp.args[0]
             try:
-                cond = sp.solveset(sp.Gt(argomento, 0), x, dom)
+                cond = sp.solveset(sp.Gt(arg, 0), x, sp.S.Reals)
                 dom = dom.intersect(cond)
-            except:
+            except Exception:
                 pass
 
-        #tan, sec p/2 
+        # --- tan, sec  →  escludi arg = π/2 + kπ ---
         elif underExp.func in (sp.tan, sp.sec):
             arg = underExp.args[0]
             try:
-                for punti in [sp.pi/2, 3*sp.pi/2]:
-                    sol = sp.solveset(sp.Eq(arg, punti), x, domain=dom)
-                    if sol != sp.EmptySet and sol.is_FiniteSet:
-                        base = list(sol)[0]  # se è piriodica basta la piram sol
-                        
-                        period = findPeriod(underExp, x)
-                        print("----------------", period)
-                        if period is not None:
-                            cond = sp.ImageSet(sp.Lambda(k, base + k*period), sp.S.Integers)
-                            dom = dom - cond
-                            break
-                        else:
-                            dom = dom - sol   
-            except:
+                sol = sp.solveset(sp.Eq(arg, sp.pi / 2), x, domain=sp.S.Reals)
+                if sol != sp.EmptySet:
+                    period = findPeriod(underExp, x)
+                    if period is not None and sol.is_FiniteSet:
+                        base_pt = list(sol)[0]
+                        cond = sp.ImageSet(sp.Lambda(k, base_pt + k * period), sp.S.Integers)
+                        dom = dom - cond
+                    elif sol.is_FiniteSet:
+                        dom = dom - sol
+            except Exception:
                 pass
-        
-        # cotn,cosc kp
+
+        # --- cot, csc  →  escludi arg = kπ ---
         elif underExp.func in (sp.cot, sp.csc):
             arg = underExp.args[0]
             try:
-                for punti in [sp.pi, 2*sp.pi]:
-                    sol = sp.solveset(sp.Eq(arg, punti), x, domain=dom)
-                    if sol != sp.EmptySet and sol.is_FiniteSet:
-                        base = list(sol)[0]  # se è piriodica basta la piram sol
-                        
-                        period = findPeriod(underExp, x)
-                        if period is not None:
-                            cond = sp.ImageSet(sp.Lambda(k, base + k*period), sp.S.Integers)
-                            dom = dom - cond
-                            break
-                        else:
-                            dom = dom - sol   
-            except:
+                sol = sp.solveset(sp.Eq(arg, 0), x, domain=sp.S.Reals)
+                if sol != sp.EmptySet:
+                    period = findPeriod(underExp, x)
+                    if period is not None and sol.is_FiniteSet:
+                        base_pt = list(sol)[0]
+                        cond = sp.ImageSet(sp.Lambda(k, base_pt + k * period), sp.S.Integers)
+                        dom = dom - cond
+                    elif sol.is_FiniteSet:
+                        dom = dom - sol
+            except Exception:
                 pass
-        
-        # arcos, arcsen -1,1
+
         elif underExp.func in (sp.asin, sp.acos):
             arg = underExp.args[0]
             try:
-                cond = sp.solveset(sp.And(arg >= -1, arg <= 1), x, dom)
-                dom = dom.intersect(cond)
-            except:
+                cond_lower = sp.solveset(sp.Ge(arg, -1), x, domain=sp.S.Reals)
+                cond_upper = sp.solveset(sp.Le(arg,  1), x, domain=sp.S.Reals)
+                dom = dom.intersect(cond_lower).intersect(cond_upper)
+            except Exception:
                 pass
-                
-        
-    
+
     print("dominio:", dom)
     return dom

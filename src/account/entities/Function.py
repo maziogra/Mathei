@@ -9,6 +9,7 @@ class Function(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     user_id: Mapped[int] = mapped_column(ForeignKey("user_account.id"))
     function: Mapped[str] = mapped_column(String(250))
+    latex: Mapped[str] = mapped_column(String(500))
 
     def __repr__(self) -> str:
-        return f"Function(id={self.id!r}, user_id={self.user_id!r}, function={self.function!r})"
+        return f"Function(id={self.id!r}, user_id={self.user_id!r}, function={self.function!r}, latex={self.latex!r})"

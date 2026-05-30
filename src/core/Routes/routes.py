@@ -6,9 +6,10 @@ from core.Routes import (
     derivativesRoute,
     signRoute,
     asymptotesRoute,
-    minMaxRoute
+    minMaxRoute,
+    ocrRoute
 )
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 router.include_router(domainRoute.router)
 router.include_router(intersectionsRoute.router)
@@ -17,3 +18,4 @@ router.include_router(derivativesRoute.router)
 router.include_router(signRoute.router)
 router.include_router(minMaxRoute.router)
 router.include_router(asymptotesRoute.router)
+router.include_router(ocrRoute.router)

@@ -4,7 +4,7 @@ from account.Routes import (
     registrationRoute,
     historyRoute
 )
-router = APIRouter()
+router = APIRouter(prefix="/api")
 
 router.include_router(loginRoute.router)
 router.include_router(registrationRoute.router)
