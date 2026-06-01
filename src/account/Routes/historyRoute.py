@@ -47,3 +47,38 @@ async def getHistory(
     result = db.scalars(stmt).all()
     
     return {"functions": result}
+
+@router.delete("/history/{entry_id}")
+async def delete_function(
+    entry_id:     int,
+    payload=Depends(verifyJWT),
+    db: Session = Depends(get_db)
+):
+    entry = (
+        db.query(Function)
+        .filter(
+            Function.id      == entry_id,
+            Function.user_id == payload["id"],
+        )
+        .first()
+    )
+    if not entry:
+        raise HTTPException(status_code=404, detail="Funzione non trovata")
+
+    db.delete(entry)
+    db.commit()
+    return {"msg": "eliminata"}
+
+
+@router.delete("/history")
+async def delete_all_functions(
+    payload=Depends(verifyJWT),
+    db: Session = Depends(get_db)
+):
+    deleted_count = (
+        db.query(Function)
+        .filter(Function.user_id == payload["id"])
+        .delete(synchronize_session=False)
+    )
+    db.commit()
+    return {"msg": f"{deleted_count} funzioni eliminate"}
