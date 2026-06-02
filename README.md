@@ -6,9 +6,7 @@ Uno strumento molto usato dagli studenti è Photomath, ma spesso non fornisce tu
 
 Questo progetto verrà presentato al "Politekne Mattei 2026"
 
-
 ## Bugs
-- Non prende sin(pi)
 - Ridurre precisione dei decimali
 
 ## Features da implementare
