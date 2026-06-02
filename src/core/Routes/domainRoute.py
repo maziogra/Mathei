@@ -23,4 +23,3 @@ async def get_domain(f: str | None = None):
         }
     else:
         return result
-    

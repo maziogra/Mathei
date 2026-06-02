@@ -11,4 +11,3 @@ Questo progetto verrà presentato al "Politekne Mattei 2026"
 
 ## Features da implementare
 - Implementare l'https
-- Aggiungere Il SVG Welcome
