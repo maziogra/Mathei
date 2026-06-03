@@ -18,12 +18,14 @@ def findCriticalPoints(f, x, flag = False):
         else:
             a, b = result
 
-    # trovo zeri e dominio da cui estrarro i punti critici
+    # trovo zeri e dominio da cui estraggo i punti critici
     points = sp.solveset(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
     if points == sp.EmptySet:
         points = []
     elif isinstance(points, sp.Interval):
         points = [points.start, points.end]
+    elif isinstance(points, sp.ConditionSet):
+        return result, True
     else:
         points = list(points)
     domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))

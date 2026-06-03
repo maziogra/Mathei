@@ -3,11 +3,9 @@
 
 import sympy as sp
 from core.Utils.findPeriod import findPeriod
-from core.Domain.domain import domain as findDomain
 
 def findNearestPeriod(f, x):
     period = findPeriod(f, x)
-    d = findDomain(f, x)
 
     if period is None:
         return []

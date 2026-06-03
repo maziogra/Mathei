@@ -16,10 +16,12 @@ async def get_domain(f: str | None = None):
     result = checkFunction(expr, x)
     
     if result == None:
-        dominio = sp.pretty(domain(expr, x))
+        dominio, warning = domain(expr, x)
+        if warning != None:
+            raise HTTPException(status_code=400, detail=warning)
 
         return {
-            "msg": str(dominio)
+            "msg": sp.pretty(dominio)
         }
     else:
         return result

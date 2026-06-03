@@ -14,7 +14,7 @@ def intersections(f):
     #int con asse x y=0
     intersectionsxy=[]
     try:
-        zeri = sp.solveset(f, x, d)
+        zeri = list(sp.solveset(f, x, d))
         print(zeri)
         if isinstance(zeri, sp.FiniteSet):
             for zero in zeri:

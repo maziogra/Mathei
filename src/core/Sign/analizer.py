@@ -30,4 +30,4 @@ def analizer(expr, x):
         for i in points:
             res.append(i)
 
-    return res, warning
+    return list(set(res)), warning

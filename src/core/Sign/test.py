@@ -24,8 +24,9 @@ def test(intervals, f, x):
             sign.append("Non definito")
         else: 
             valore = f.subs(x, test).evalf()
-
-            if valore > 0:
+            if "I" in str(valore):
+                sign.append("Non definito")
+            elif valore > 0:
                 sign.append('+')
             elif valore < 0:
                 sign.append('-')
