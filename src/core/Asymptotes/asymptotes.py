@@ -92,7 +92,6 @@ def asymptotes(f, x):
         except Exception:
             return [], True
 
-
     if isinstance(dominio, sp.Union):
         for intervallo in dominio.args:
             if hasattr(intervallo, 'left_open') and intervallo.left_open:
@@ -113,7 +112,6 @@ def asymptotes(f, x):
     asintoti_verticali = []
 
     f = sp.expand_trig(f)
-
     for punto in punti_da_analizzare:
         try:
             lim_sx = limits(f, x, punto, '-')

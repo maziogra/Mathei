@@ -4,6 +4,8 @@
 from core.Sign.addInfinite import addInfinite
 from core.Sign.test import test
 from core.Sign.analizer import analizer
+from core.Utils.isGonio import isGonio
+
 import sympy as sp
 
 def createSign(f, x):
@@ -14,7 +16,7 @@ def createSign(f, x):
     intervals = sorted(intervals)
     
     f_exp = sp.expand_trig(f)
-    if not f_exp.has(sp.cos, sp.sin, sp.tan):
+    if not isGonio(f_exp, x):
         addInfinite(intervals)
     
     print("Final intervals:")
