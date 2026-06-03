@@ -7,11 +7,5 @@ Uno strumento molto usato dagli studenti è Photomath, ma spesso non fornisce tu
 Questo progetto verrà presentato al "Politekne Mattei 2026"
 
 ## Bugs
-- sqrt(x*cos(x)) non va
-- probabile problema con findDomain
 - controllare findPeriod che da problemi con funzioni non solo goniometriche (tipo sqrt(x*cos(x)))
 - Ridurre precisione dei decimali
-- Eliminare le doppie dalle intersezioni
-
-## Features da implementare
-- Implementare l'https

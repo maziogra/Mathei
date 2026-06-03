@@ -6,7 +6,11 @@ from core.Domain.domain import domain
 from core.Utils.findPeriod import findPeriod     
 
 def asymptotes(f, x):
-    dominio = domain(f, x)  
+    dominio, warning = domain(f, x)
+    if warning == None:
+        warning = False
+    else:
+        warning = True
     risultati = {}
 
   #orzzontali
@@ -86,6 +90,7 @@ def asymptotes(f, x):
 
 
     if isinstance(dominio, sp.Union):
+        print("UNION")
         for intervallo in dominio.args:
             if hasattr(intervallo, 'left_open') and intervallo.left_open:
                 punti_da_analizzare.append(intervallo.start)
@@ -101,6 +106,7 @@ def asymptotes(f, x):
         {p for p in punti_da_analizzare if p != sp.oo and p != -sp.oo}
     )
 
+    print("_____________________________-------------------", dominio, punti_da_analizzare)
     #veriticlai ediscontinuita
     asintoti_verticali = []
 
@@ -120,4 +126,4 @@ def asymptotes(f, x):
 
     risultati["asintoti verticali"] = asintoti_verticali
 
-    return risultati, False
+    return risultati, warning

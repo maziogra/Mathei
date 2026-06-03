@@ -25,8 +25,13 @@ async def get_intersections(f: str | None = None):
             else:
                 punti.append(item)
         
-        return {
-            "msg": punti
-        }
+        if not punti:            
+            return {
+                "msg": "Nessun punto di intersezione trovato."
+            }
+        else:
+            return {
+                "msg": punti
+            }
     else:
         return result

@@ -14,7 +14,7 @@ def intersections(f):
     #int con asse x y=0
     intersectionsxy=[]
     try:
-        zeri = list(sp.solveset(f, x, d))
+        zeri = sp.solveset(f, x, d)
         print(zeri)
         if isinstance(zeri, sp.FiniteSet):
             for zero in zeri:
@@ -25,9 +25,10 @@ def intersections(f):
     try:
         perxZero=f.subs(x, 0).evalf()
         if perxZero.is_real and perxZero.is_finite:
-            intersectionsxy.append((0,perxZero))
+            if (0, perxZero) not in intersectionsxy:
+                intersectionsxy.append((0,perxZero))
     except Exception as excep:
-        intersections.append("errore asse y ")
+        intersectionsxy.append("errore asse y ")
 
     #risultati stmpa
     print("punti di intersezione con gli assi ")

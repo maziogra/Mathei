@@ -20,9 +20,20 @@ async def get_asymptotes(f: str | None = None):
     if result == None:
         asintoti, warning = asymptotes(expr, x)
         
+        asintoti = to_json_safe(asintoti)
+        
         return {
-            "msg": str(asintoti),
+            "msg": asintoti,
             "warning": warning
         }
     else:
         return result
+    
+def to_json_safe(obj):
+    if isinstance(obj, dict):
+        return {k: to_json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple, set)):
+        return [to_json_safe(x) for x in obj]
+    if hasattr(obj, "float"):
+        return float(obj)
+    return str(obj)
