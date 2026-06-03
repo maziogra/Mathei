@@ -4,14 +4,14 @@
 import sympy as sp
 from core.Sign.addDomainPoints import addDomainPoints
 from core.Utils.findNearestPeriod import findNearestPeriod
-from core.Sign.test import test
+from core.Utils.isGonio import isGonio
 
 def findCriticalPoints(f, x, flag = False):
     a = -sp.oo
     b = sp.oo
 
     f = sp.expand_trig(f)
-    if f.has(sp.cos, sp.sin, sp.tan):
+    if isGonio(f, x):
         result = findNearestPeriod(f, x)
         if result == []:
             return result, True
@@ -33,7 +33,7 @@ def findCriticalPoints(f, x, flag = False):
     except Exception:
         return [], True
 
-    if f.has(sp.cos, sp.sin, sp.tan):
+    if isGonio(f, x):
         if a is not -sp.oo:
             points.append(a)
         if b is not sp.oo:

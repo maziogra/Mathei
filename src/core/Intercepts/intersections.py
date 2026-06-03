@@ -1,14 +1,14 @@
 # Autore: Khadija
 
 import sympy as sp
-from core.Utils.findPeriod import findPeriod
 from core.Utils.findNearestPeriod import findNearestPeriod
+from core.Utils.isGonio import isGonio
 
 def intersections(f):
     x=sp.symbols("x")
     d=sp.S.Reals
 
-    if isGoniometric(f):
+    if isGonio(f, x):
         a, b = findNearestPeriod(f, x)
         d = sp.Interval(a, b)
     #int con asse x y=0
@@ -36,6 +36,4 @@ def intersections(f):
         print(point)
     return(intersectionsxy)
 # controllo ha gonio
-def isGoniometric(f):
-    goniometric = [sp.sin, sp.cos, sp.tan, sp.cot, sp.sec, sp.csc]
-    return any(f.has(func) for func in goniometric)
+

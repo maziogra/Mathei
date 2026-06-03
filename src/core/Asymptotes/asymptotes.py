@@ -4,6 +4,7 @@ import sympy as sp
 from core.Limits.limits import limits
 from core.Domain.domain import domain
 from core.Utils.findPeriod import findPeriod     
+from core.Utils.isGonio import isGonio
 
 def asymptotes(f, x):
     dominio, warning = domain(f, x)
@@ -82,7 +83,7 @@ def asymptotes(f, x):
     #possibili verticali caso; x-1/(x**2-1)
     punti_da_analizzare = []
 
-    if f.has(sp.sin, sp.cos, sp.tan):
+    if isGonio(f, x):
         period = findPeriod(f, x)
         if not period:
             return [], True
@@ -93,7 +94,6 @@ def asymptotes(f, x):
 
 
     if isinstance(dominio, sp.Union):
-        print("UNION")
         for intervallo in dominio.args:
             if hasattr(intervallo, 'left_open') and intervallo.left_open:
                 punti_da_analizzare.append(intervallo.start)
@@ -109,7 +109,6 @@ def asymptotes(f, x):
         {p for p in punti_da_analizzare if p != sp.oo and p != -sp.oo}
     )
 
-    print("_____________________________-------------------", dominio, punti_da_analizzare)
     #veriticlai ediscontinuita
     asintoti_verticali = []
 
@@ -119,8 +118,10 @@ def asymptotes(f, x):
         try:
             lim_sx = limits(f, x, punto, '-')
             lim_dx = limits(f, x, punto, '+')
-
-            if abs(lim_sx) == sp.oo or abs(lim_dx) == sp.oo:
+            
+            if lim_sx == lim_dx and lim_sx.is_real:
+                continue
+            elif abs(lim_sx) == sp.oo or abs(lim_dx) == sp.oo:
                 asintoti_verticali.append(punto)
             
 
