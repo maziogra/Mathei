@@ -86,7 +86,10 @@ def asymptotes(f, x):
         period = findPeriod(f, x)
         if not period:
             return [], True
-        dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-period, period, left_open=False, right_open=False)) 
+        try:
+            dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-period, period, left_open=False, right_open=False)) 
+        except Exception:
+            return [], True
 
 
     if isinstance(dominio, sp.Union):

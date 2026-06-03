@@ -28,7 +28,10 @@ def findCriticalPoints(f, x, flag = False):
         return result, True
     else:
         points = list(points)
-    domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
+    try:
+        domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
+    except Exception:
+        return [], True
 
     if f.has(sp.cos, sp.sin, sp.tan):
         if a is not -sp.oo:
