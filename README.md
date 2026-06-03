@@ -11,7 +11,7 @@ Questo progetto verrà presentato al "Politekne Mattei 2026"
 - probabile problema con findDomain
 - controllare findPeriod che da problemi con funzioni non solo goniometriche (tipo sqrt(x*cos(x)))
 - Ridurre precisione dei decimali
-- sistemare frontend, la tendina di f' e f'' non si aggiorna anche se i dati vengono ricevuti
+- Eliminare le doppie dalle intersezioni
 
 ## Features da implementare
 - Implementare l'https
