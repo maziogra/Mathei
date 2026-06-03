@@ -22,7 +22,10 @@ def findSolution(f, x):
         b = float(b)
         print(a, b)
 
-    d = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
+    try:
+        d = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
+    except Exception:
+        return []
 
     guesses = [i/3 for i in range(-300,300)]
     solutions = set()

@@ -24,15 +24,15 @@ def notableLimits(expr, x):
     elif expr == (1 + x)**(1/x):
         print("Limite notevole: (1+x)^(1/x) → e")
 
-def limits(f, x, x0):
-    result = sp.limit(f, x, x0)
+def limits(f, x, x0, dir="+"):
+    result = sp.limit(f, x, x0, dir)
     if isinstance(result, sp.AccumBounds):
         return None
     for expr in visit(f):
         if isinstance(expr, sp.Pow):
             base, exp = expr.args
-            lb = sp.limit(base, x, x0)
-            le = sp.limit(exp, x, x0)
+            lb = sp.limit(base, x, x0, dir)
+            le = sp.limit(exp, x, x0, dir)
 
             if lb == 1 and abs(le) == sp.oo:
                 print("Forma indeterminata 1^∞ in", expr)
@@ -44,8 +44,8 @@ def limits(f, x, x0):
 
         if expr.is_Rational is False and sp.denom(expr) != 1:
             num, den = sp.fraction(expr)
-            ln = sp.limit(num, x, x0)
-            ld = sp.limit(den, x, x0)
+            ln = sp.limit(num, x, x0, dir)
+            ld = sp.limit(den, x, x0, dir)
 
             if ln == 0 and ld == 0:
                 print("Forma indeterminata 0/0 in", expr)
@@ -54,7 +54,7 @@ def limits(f, x, x0):
             continue
 
         if isinstance(expr, sp.Mul):
-            lims = [sp.limit(a, x, x0) for a in expr.args]
+            lims = [sp.limit(a, x, x0, dir) for a in expr.args]
             if 0 in lims and any(abs(l) == sp.oo for l in lims):
                 print("Forma indeterminata 0·∞ in", expr)
         notableLimits(expr, x)

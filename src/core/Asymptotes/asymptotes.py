@@ -118,7 +118,8 @@ def asymptotes(f, x):
         try:
             lim_sx = limits(f, x, punto, '-')
             lim_dx = limits(f, x, punto, '+')
-            
+
+
             if lim_sx == lim_dx and lim_sx.is_real:
                 continue
             elif abs(lim_sx) == sp.oo or abs(lim_dx) == sp.oo:

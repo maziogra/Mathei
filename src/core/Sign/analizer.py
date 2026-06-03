@@ -7,6 +7,7 @@ from core.Sign.findSolution import findSolution
 def analizer(expr, x):
     res = []
     warning = False
+    tag = False
 
     if expr.is_polynomial(x):
         points, warning = findCriticalPoints(expr, x)
@@ -18,16 +19,23 @@ def analizer(expr, x):
     if getattr(expr, 'is_Mul', False):
         for arg in expr.args:
             points, warning = findCriticalPoints(arg, x)
+            if isinstance(points, sp.ConditionSet):
+                tag = True
+            else:
+                for i in points:
+                    res.append(i)    
+    else:
+        points, warning = findCriticalPoints(expr, x)
+        if isinstance(points, sp.ConditionSet):
+            tag = True
+        else:
             for i in points:
-                res.append(i)    
-    elif getattr(expr, 'is_Add', False): 
+                res.append(i)
+
+    if tag: 
         for i in findSolution(expr, x):
             warning = True
             res.append(i)
         return res, warning
-    else:
-        points, warning = findCriticalPoints(expr, x)
-        for i in points:
-            res.append(i)
 
     return list(set(res)), warning
