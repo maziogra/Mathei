@@ -2,6 +2,7 @@ from fastapi import HTTPException
 import sympy as sp
 
 def checkFunction(f, x):
+    f = sp.simplify(f)
     if f == None:
         raise HTTPException(status_code=400, detail="No function was provided")
     else:

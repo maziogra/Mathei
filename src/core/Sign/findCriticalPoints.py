@@ -27,8 +27,12 @@ def findCriticalPoints(f, x, flag = False):
     else:
         points = list(points)
     domain = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(a, b, left_open=False, right_open=False))
-    points.append(a)
-    points.append(b)
+
+    if f.has(sp.cos, sp.sin, sp.tan):
+        if a is not -sp.oo:
+            points.append(a)
+        if b is not sp.oo:
+            points.append(b)
 
     # metto nell'insieme dei punti anche i punti in cui la funz non esiste
     addDomainPoints(domain, points)
