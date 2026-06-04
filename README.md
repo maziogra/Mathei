@@ -9,4 +9,3 @@ Questo progetto verrà presentato al "Politekne Mattei 2026"
 ## Bugs
 - asintoti di sec(x) non vengono trovati, il problema sta nel fatto che viene ritornato da domain una lambda del tipo k*pi (per sistemare bisogna piazzare dentro un k e controllare che sia dentro al periodo scelto)
 - Sistemare come si vede il dominio nel frontend
-- Ridurre precisione dei decimali

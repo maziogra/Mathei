@@ -110,7 +110,6 @@ def asymptotes(f, x):
 
     #veriticlai ediscontinuita
     asintoti_verticali = []
-
     f = sp.expand_trig(f)
     for punto in punti_da_analizzare:
         try:

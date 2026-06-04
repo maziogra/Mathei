@@ -19,6 +19,7 @@ async def get_domain(f: str | None = None):
         dominio, warning = domain(expr, x)
         if warning != None:
             raise HTTPException(status_code=400, detail=warning)
+        print(dominio)
 
         return {
             "msg": sp.pretty(dominio)

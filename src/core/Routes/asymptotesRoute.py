@@ -2,7 +2,6 @@ from fastapi import APIRouter, HTTPException
 import sympy as sp
 from core.Utils.checkFunction import checkFunction
 from core.Asymptotes.asymptotes import asymptotes
-from sympy.parsing.latex import parse_latex
 from core.Utils.parseFunction import parse_function
 
 
