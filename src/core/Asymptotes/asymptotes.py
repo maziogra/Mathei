@@ -86,11 +86,13 @@ def asymptotes(f, x):
     if isGonio(f, x):
         period = findPeriod(f, x)
         if not period:
-            return [], True
+            risultati["asintoti verticali"] = []
+            return risultati, True
         try:
             dominio = sp.calculus.util.continuous_domain(f, x, domain=sp.Interval(-period, period, left_open=False, right_open=False)) 
         except Exception:
-            return [], True
+            risultati["asintoti verticali"] = []
+            return risultati, True
 
     if isinstance(dominio, sp.Union):
         for intervallo in dominio.args:

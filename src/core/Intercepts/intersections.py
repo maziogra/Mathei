@@ -9,7 +9,10 @@ def intersections(f):
     d=sp.S.Reals
 
     if isGonio(f, x):
-        a, b = findNearestPeriod(f, x)
+        result = findNearestPeriod(f, x)
+        if not result:
+            return []
+        a, b = result
         d = sp.Interval(a, b)
     #int con asse x y=0
     intersectionsxy=[]
