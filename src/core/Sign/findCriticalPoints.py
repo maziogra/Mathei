@@ -24,7 +24,7 @@ def findCriticalPoints(f, x, flag = False):
         points = []
     elif isinstance(points, sp.Interval):
         points = [points.start, points.end]
-    elif isinstance(points, sp.ConditionSet) and points.has(sp.ConditionSet):
+    elif isinstance(points, sp.ConditionSet) or points.has(sp.ConditionSet):
         return points, True
     else:
         points = list(points)

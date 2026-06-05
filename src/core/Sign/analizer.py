@@ -19,14 +19,14 @@ def analizer(expr, x):
     if getattr(expr, 'is_Mul', False):
         for arg in expr.args:
             points, warning = findCriticalPoints(arg, x)
-            if isinstance(points, sp.ConditionSet):
+            if isinstance(points, sp.ConditionSet) or points.has(sp.ConditionSet):
                 tag = True
             else:
                 for i in points:
                     res.append(i)    
     else:
         points, warning = findCriticalPoints(expr, x)
-        if isinstance(points, sp.ConditionSet):
+        if isinstance(points, sp.ConditionSet) or points.has(sp.ConditionSet):
             tag = True
         else:
             for i in points:
